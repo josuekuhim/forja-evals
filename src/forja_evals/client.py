@@ -27,6 +27,9 @@ class Endpoint(BaseModel):
     api_key_env: str | None = None  # nome da variável de ambiente; a chave nunca vai pra config
     price_in_per_mtok: float = 0.0
     price_out_per_mtok: float = 0.0
+    # Campos extras específicos do servidor, mesclados no corpo da requisição. Ex.: no llama.cpp,
+    # {"cache_prompt": false} evita que o reuso de KV cache entre requisições mude a saída.
+    extra_body: dict[str, Any] = {}
 
     def api_key(self) -> str | None:
         if not self.api_key_env:
@@ -119,6 +122,7 @@ class ChatClient:
         }
         if seed is not None:
             body["seed"] = seed
+        body.update(self.ep.extra_body)
         key = self._cache_key(body)
         if self.cache and (hit := self.cache.get(key)):
             return ChatResult(**{**hit, "cached": True})

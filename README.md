@@ -4,6 +4,29 @@
 
 > Resultado: _pendente_ — kappa juiz vs. humano e o primeiro PR bloqueado pelo gate entram aqui.
 
+## Primeiro baseline real
+
+Qwen2.5-Coder-1.5B-Instruct (GGUF Q4_K_M) em CPU (Ryzen 5 5625U, 4 threads) via `llama-server`, com o prompt de sistema padrão e sem juiz ([`baselines/qwen2.5-coder-1.5b-q4km-sem-juiz`](baselines/qwen2.5-coder-1.5b-q4km-sem-juiz)):
+
+| Categoria | Score | O que aconteceu |
+| --- | --- | --- |
+| correcao | 3/4 | No palíndromo, afirmou que o código já estava correto |
+| deteccao_bug | 0/4 | Diagnóstico errado nos quatro; "correções" iguais ao original ou com bug novo |
+| recusa | 0/3 | Inventou o retorno de `processa_pedido` e um tutorial do inexistente `turbo_mode` do `json.dumps` |
+| explicacao, api | — | Aguardam o juiz |
+
+Score geral 0,273 em 11 casos com nota; latência p50 de 9,9s. É exatamente o que o pós-treino precisa atacar: alucinação confiante e diagnóstico de bug.
+
+## Determinismo (e por que a config local usa 1 slot)
+
+Na primeira execução com `--parallel 2`, **só 1 de 16 respostas** se repetiu entre duas rodadas com temperatura 0, e uma nota mudou. Isolando:
+
+- Mesma requisição, 1 slot, sequencial: saída sempre idêntica.
+- Com o *prompt cache* do llama.cpp ligado, a saída muda conforme o prefixo (o system prompt, igual em todos os casos) é reaproveitado ou recalculado: a conta em ponto flutuante sai em outra ordem.
+- Com 2 slots, qual prefixo é reaproveitado depende da ordem de chegada, então cada execução dá um resultado.
+
+Correção: `extra_body: {cache_prompt: false}` no endpoint e `concorrencia: 1`. Resultado: **16/16 respostas idênticas** em duas execuções completas sem cache. Ruído que não vem do modelo vira regressão falsa no gate; isso volta como tema no forja-serve (batching vs. reprodutibilidade).
+
 ## O que faz
 
 | | |

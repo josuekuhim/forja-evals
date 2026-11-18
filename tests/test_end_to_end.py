@@ -127,3 +127,10 @@ def test_cli_compare_e_report(tmp_path, fake):
     assert r.exit_code == 0
     table = report.runs_table([base, cand])
     assert "| bom |" in table and "| ruim |" in table
+
+
+def test_extra_body_vai_na_requisicao(tmp_path, fake):
+    cfg = make_cfg("bom", tmp_path, judge=False)
+    cfg.modelo.extra_body = {"cache_prompt": False}
+    asyncio.run(run_eval(cfg, out_root=tmp_path / "runs", transport=httpx.MockTransport(fake), limit=2))
+    assert fake.calls and all(c["cache_prompt"] is False for c in fake.calls)

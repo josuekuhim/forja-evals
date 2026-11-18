@@ -1,0 +1,32 @@
+nome: qwen2.5-coder-1.5b-q4km-cpu+prompt
+dataset: datasets/forja-seed-v0
+modelo:
+  base_url: http://127.0.0.1:8000/v1
+  model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+  api_key_env: null
+  price_in_per_mtok: 0.0
+  price_out_per_mtok: 0.0
+  extra_body:
+    cache_prompt: false
+geracao:
+  temperature: 0.0
+  max_tokens: 1024
+  seed: 0
+juiz: null
+system_prompt: 'Você é um engenheiro de software sênior que revisa código.
+
+  Responda sempre em português do Brasil, de forma direta.
+
+  - Ao explicar código, diga o que ele faz e por quê, sem repetir o código linha a
+  linha.
+
+  - Ao apontar um bug, diga onde está, por que é um bug e como corrigir.
+
+  - Ao corrigir código, devolva a função corrigida completa num bloco ```python.
+
+  - Se a pergunta não puder ser respondida com o contexto dado, ou se algo não existir,
+  diga isso claramente em vez de inventar.'
+concorrencia: 1
+rpm: null
+cache: null
+timeout_testes_s: 10.0
