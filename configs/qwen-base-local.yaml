@@ -1,0 +1,23 @@
+# Modelo base servido localmente (vLLM, forja-serve ou `llama-server`), juiz via API externa.
+nome: qwen2.5-coder-1.5b-base+prompt
+dataset: datasets/forja-seed-v0
+modelo:
+  base_url: http://localhost:8000/v1
+  model: Qwen/Qwen2.5-Coder-1.5B-Instruct
+  # custo de GPU local: preencha com (US$/hora da GPU) / (tokens/hora) para comparar com a API
+  price_in_per_mtok: 0.0
+  price_out_per_mtok: 0.0
+geracao:
+  temperature: 0.0
+  max_tokens: 1024
+  seed: 0
+juiz:
+  # Qualquer endpoint OpenAI-compatível. Ex.: OpenRouter, Together, ou um gateway LiteLLM na frente
+  # da API da Anthropic. Fixe o modelo do juiz: trocar de juiz invalida a calibração (kappa).
+  base_url: https://openrouter.ai/api/v1
+  model: anthropic/claude-sonnet-5.5   # confira o slug e o preço atuais no provedor
+  api_key_env: OPENROUTER_API_KEY
+  price_in_per_mtok: 3.0
+  price_out_per_mtok: 15.0
+concorrencia: 8
+rpm: 120

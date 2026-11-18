@@ -1,0 +1,42 @@
+[project]
+name = "forja-evals"
+version = "0.1.0"
+description = "A régua do Forja: evals offline, LLM-as-judge calibrado e gate de regressão"
+requires-python = ">=3.12"
+dependencies = [
+    "forja-contracts",
+    "httpx>=0.27",
+    "numpy>=1.26",
+    "pydantic>=2.7",
+    "pyyaml>=6",
+    "typer>=0.12",
+]
+
+[project.scripts]
+forja-evals = "forja_evals.cli:app"
+
+[dependency-groups]
+dev = ["pytest>=8", "ruff>=0.6"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/forja_evals"]
+
+# Local. Ao publicar o hub no GitHub, troque por:
+# forja-contracts = { git = "https://github.com/<usuario>/forja", subdirectory = "contracts" }
+[tool.uv.sources]
+forja-contracts = { path = "../forja/contracts", editable = true }
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+ignore = ["E501"]  # o formatter cuida do código; prompts e docstrings podem passar

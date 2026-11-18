@@ -1,0 +1,17 @@
+# Baseline externo: modelo grande via API com o mesmo prompt. É a "referência" da tabela do hub.
+nome: referencia-api
+dataset: datasets/forja-seed-v0
+modelo:
+  base_url: https://openrouter.ai/api/v1
+  model: anthropic/claude-sonnet-5.5
+  api_key_env: OPENROUTER_API_KEY
+  price_in_per_mtok: 3.0
+  price_out_per_mtok: 15.0
+juiz:
+  base_url: https://openrouter.ai/api/v1
+  model: anthropic/claude-sonnet-5.5
+  api_key_env: OPENROUTER_API_KEY
+  price_in_per_mtok: 3.0
+  price_out_per_mtok: 15.0
+concorrencia: 4
+rpm: 60

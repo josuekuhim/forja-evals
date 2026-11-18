@@ -1,0 +1,45 @@
+name: forja-evals gate
+description: Roda o forja-evals num endpoint e bloqueia o PR se houver regressão significativa vs. o baseline.
+
+inputs:
+  config:
+    description: YAML da execução do candidato
+    required: true
+  baseline:
+    description: Diretório de uma execução de baseline commitada (com summary.json e results.jsonl)
+    required: true
+  min-effect:
+    description: Queda mínima de score que conta como regressão
+    default: "0.02"
+  forja-evals-ref:
+    description: Ref git do forja-evals a usar
+    default: main
+
+outputs:
+  regressao:
+    description: '"true" se houve regressão'
+    value: ${{ steps.compare.outputs.regressao }}
+  run-dir:
+    description: Diretório da execução do candidato
+    value: ${{ steps.run.outputs.run_dir }}
+
+runs:
+  using: composite
+  steps:
+    - uses: astral-sh/setup-uv@v6
+    - id: run
+      shell: bash
+      run: uvx --from "git+${{ github.server_url }}/${{ github.action_repository }}@${{ inputs.forja-evals-ref }}" forja-evals run "${{ inputs.config }}" --out runs
+    - id: compare
+      shell: bash
+      run: >
+        uvx --from "git+${{ github.server_url }}/${{ github.action_repository }}@${{ inputs.forja-evals-ref }}"
+        forja-evals compare "${{ inputs.baseline }}" "${{ steps.run.outputs.run_dir }}"
+        --min-effect "${{ inputs.min-effect }}" --markdown-out forja-evals-report.md
+    - if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: forja-evals-run
+        path: |
+          runs/
+          forja-evals-report.md

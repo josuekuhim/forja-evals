@@ -1,0 +1,21 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # forja-contracts vem do repo hub; em CI, aponte o [tool.uv.sources] para o git (ver pyproject).
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository_owner }}/forja
+          path: _forja
+      - run: mv _forja ../forja
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync
+      - run: uv run ruff check .
+      - run: uv run pytest -q

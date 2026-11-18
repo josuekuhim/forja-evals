@@ -1,0 +1,6 @@
+nome: forja-seed-v0
+uso: avaliacao   # avaliacao | treino. Datasets de avaliação nunca viram pares de preferência.
+descricao: >
+  Semente do dataset de avaliação do Forja: 16 casos escritos à mão cobrindo as 5 categorias.
+  Serve para validar o pipeline. A v1 precisa de ~50 casos por categoria, com rótulo humano.
+licenca: CC-BY-4.0
