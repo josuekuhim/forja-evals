@@ -19,7 +19,7 @@ from forja_evals import judge as judge_mod
 from forja_evals.cache import Cache
 from forja_evals.client import ChatClient, Endpoint
 from forja_evals.datasets import Dataset, load_dataset
-from forja_evals.metrics import deterministic
+from forja_evals.metrics import degenerate, deterministic
 from forja_evals.prompts import SYSTEM_PROMPT
 from forja_evals.stats import percentiles
 
@@ -78,10 +78,10 @@ async def _eval_case(
         completion_tokens=res.completion_tokens,
         cost_usd=res.cost_usd,
         cached=res.cached,
+        finish_reason=res.finish_reason,
     )
     row["metricas"] = await asyncio.to_thread(deterministic, case, res.text, timeout_s=cfg.timeout_testes_s)
 
-    nota = None
     if judge is not None:
         try:
             jr = await judge.chat(judge_mod.build_messages(case, res.text), **cfg.juiz_geracao.model_dump())
@@ -90,13 +90,29 @@ async def _eval_case(
         except Exception as e:
             row["juiz"] = {"nota": None, "erro": str(e)}
 
-    det = row["metricas"]["score_det"]
-    row["score"] = det if det is not None else judge_mod.nota_to_score(nota)
-    row["fonte_score"] = "deterministico" if det is not None else ("juiz" if nota is not None else None)
+    _score(row)
     return row
 
 
-def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
+def truncated(row: dict[str, Any], max_tokens: int | None = None) -> bool:
+    """Cortada por max_tokens. Runs antigos não guardavam finish_reason: cai na contagem de tokens."""
+    if row.get("finish_reason") is not None:
+        return row["finish_reason"] == "length"
+    return max_tokens is not None and row.get("completion_tokens", 0) >= max_tokens
+
+
+def health(rows: list[dict[str, Any]], max_tokens: int | None = None) -> dict[str, Any]:
+    """Sinais que a nota não vê: loops e respostas cortadas, sobre todos os casos (com ou sem nota)."""
+    ok = [r for r in rows if "output" in r]
+    n = max(1, len(ok))
+    return {
+        "n": len(ok),
+        "taxa_degeneradas": sum(degenerate(r["output"]) for r in ok) / n,
+        "taxa_truncadas": sum(truncated(r, max_tokens) for r in ok) / n,
+    }
+
+
+def summarize(rows: list[dict[str, Any]], max_tokens: int | None = None) -> dict[str, Any]:
     def mean(xs: list[float]) -> float | None:
         return sum(xs) / len(xs) if xs else None
 
@@ -127,6 +143,7 @@ def summarize(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "juiz": custo_juiz,
             "modelo_por_1k_req": 1000 * custo_modelo / len(ok) if ok else None,
         },
+        "saude": health(ok, max_tokens),
         "recusas_indevidas": sum(
             1 for r in ok if r["categoria"] != "recusa" and r.get("metricas", {}).get("recusou")
         ),
@@ -182,7 +199,7 @@ async def run_eval(
             "parcial": bool(limit),
         },
         "duracao_s": time.perf_counter() - t0,
-        **summarize(rows),
+        **summarize(rows, cfg.geracao.max_tokens),
     }
     (out / "config.yaml").write_text(
         yaml.safe_dump(cfg.model_dump(mode="json"), sort_keys=False, allow_unicode=True), encoding="utf-8"
@@ -192,6 +209,43 @@ async def run_eval(
             f.write(json.dumps(r, ensure_ascii=False) + "\n")
     (out / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
     return out
+
+
+def _score(row: dict[str, Any]) -> None:
+    det = row["metricas"]["score_det"]
+    nota = (row.get("juiz") or {}).get("nota")
+    row["score"] = det if det is not None else judge_mod.nota_to_score(nota)
+    row["fonte_score"] = "deterministico" if det is not None else ("juiz" if nota is not None else None)
+
+
+def rescore(run_dir: str | Path) -> dict[str, Any]:
+    """Recalcula métricas determinísticas e o resumo de um run salvo, sem chamar modelo nem juiz.
+
+    Para quando a régua muda (regex, nova métrica). O hash do dataset tem de bater: as respostas
+    foram geradas para aqueles casos.
+    """
+    p = Path(run_dir)
+    summary, rows = load_run(p)
+    cfg = RunConfig.model_validate(yaml.safe_load((p / "config.yaml").read_text(encoding="utf-8")))
+    ds = load_dataset(cfg.dataset)
+    if ds.hash != summary["dataset"]["hash"]:
+        raise ValueError(f"o dataset mudou desde o run ({summary['dataset']['hash'][:12]} → {ds.hash[:12]})")
+    cases = {c.id: c for c in ds.cases}
+    for r in rows:
+        if "output" not in r:
+            continue
+        r["metricas"] = deterministic(cases[r["id"]], r["output"], timeout_s=cfg.timeout_testes_s)
+        _score(r)
+    keep = {k: summary[k] for k in ("ref", "nome", "dataset", "duracao_s") if k in summary}
+    lat = summary.get("latencia_s")
+    summary = {**keep, **summarize(rows, cfg.geracao.max_tokens)}
+    if lat is not None:  # respostas em cache não têm latência real; preserva a do run original
+        summary["latencia_s"] = lat
+    with (p / "results.jsonl").open("w", encoding="utf-8", newline="\n") as f:
+        for r in rows:
+            f.write(json.dumps(r, ensure_ascii=False) + "\n")
+    (p / "summary.json").write_text(json.dumps(summary, indent=2, ensure_ascii=False), encoding="utf-8")
+    return summary
 
 
 def load_run(path: str | Path) -> tuple[dict[str, Any], list[dict[str, Any]]]:

@@ -5,7 +5,10 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from pathlib import Path
 
-from forja_evals.runner import load_run
+import yaml
+
+from forja_evals.metrics import degenerate
+from forja_evals.runner import health, load_run
 from forja_evals.stats import BootstrapResult, paired_bootstrap
 
 
@@ -17,6 +20,10 @@ class Comparacao:
     por_categoria: dict[str, BootstrapResult]
     regressao: bool
     alertas: list[str] = field(default_factory=list)
+    # Saúde: Δ na fração de respostas SEM loop (pareado, todos os casos), e as taxas de cada lado.
+    saude: BootstrapResult | None = None
+    saude_base: dict | None = None
+    saude_cand: dict | None = None
     min_effect: float = 0.02
     alpha: float = 0.05
 
@@ -69,8 +76,42 @@ def compare(
     if faltando:
         alertas.append(f"{faltando} casos sem par (pontuados em só uma das execuções) ficaram de fora")
 
-    regressao = _verdict(geral, min_effect) == "regressão" or erro_rate > max_erro_rate
-    return Comparacao(bs["nome"], cs["nome"], geral, por_cat, regressao, alertas, min_effect, alpha)
+    # A nota só existe onde há métrica; loops aparecem em qualquer caso. Um modelo que já erra tudo
+    # (efeito chão) não tem nota para perder, mas ainda pode degenerar: o gate olha os dois.
+    bo = {r["id"]: r for r in brows if "output" in r}
+    co = {r["id"]: r for r in crows if "output" in r}
+    oids = sorted(bo.keys() & co.keys())
+    saude = paired_bootstrap(
+        [0.0 if degenerate(bo[i]["output"]) else 1.0 for i in oids],
+        [0.0 if degenerate(co[i]["output"]) else 1.0 for i in oids],
+        alpha=alpha,
+    )
+    hb = health(brows, _max_tokens(base_dir))
+    hc = health(crows, _max_tokens(cand_dir))
+    degen = _verdict(saude, min_effect) == "regressão"
+    if degen:
+        alertas.insert(
+            0,
+            f"respostas em loop: {hb['taxa_degeneradas']:.0%} → {hc['taxa_degeneradas']:.0%} "
+            f"(repetição de 8-gramas ≥ limiar), mesmo onde a nota não mede",
+        )
+    if hc["taxa_truncadas"] > hb["taxa_truncadas"]:
+        alertas.append(
+            f"respostas cortadas por max_tokens: {hb['taxa_truncadas']:.0%} → {hc['taxa_truncadas']:.0%}"
+        )
+
+    regressao = _verdict(geral, min_effect) == "regressão" or erro_rate > max_erro_rate or degen
+    return Comparacao(
+        bs["nome"], cs["nome"], geral, por_cat, regressao, alertas, saude, hb, hc, min_effect, alpha
+    )
+
+
+def _max_tokens(run_dir: str | Path) -> int | None:
+    p = Path(run_dir) / "config.yaml"
+    if not p.exists():
+        return None
+    cfg = yaml.safe_load(p.read_text(encoding="utf-8")) or {}
+    return (cfg.get("geracao") or {}).get("max_tokens")
 
 
 def to_markdown(cmp: Comparacao) -> str:
@@ -93,11 +134,23 @@ def to_markdown(cmp: Comparacao) -> str:
 
     lines.append(row("**geral**", cmp.geral))
     lines += [row(cat, r) for cat, r in cmp.por_categoria.items()]
+    if cmp.saude is not None:
+        lines.append(row("sem loop (todos os casos)", cmp.saude))
+    if cmp.saude_base and cmp.saude_cand:
+        b, c = cmp.saude_base, cmp.saude_cand
+        lines += [
+            "",
+            "| Saúde (todos os casos) | baseline | candidato |",
+            "| --- | --- | --- |",
+            f"| em loop | {b['taxa_degeneradas']:.0%} | {c['taxa_degeneradas']:.0%} |",
+            f"| cortadas por max_tokens | {b['taxa_truncadas']:.0%} | {c['taxa_truncadas']:.0%} |",
+        ]
     if cmp.alertas:
         lines += ["", "**Alertas**", *[f"- {a}" for a in cmp.alertas]]
     lines += [
         "",
         f"<sub>Bootstrap pareado, 10k reamostragens. Regressão = IC inteiro abaixo de 0 e "
-        f"queda ≥ {cmp.min_effect}. O gate decide pelo escopo geral; categorias com n pequeno têm IC largo.</sub>",
+        f"queda ≥ {cmp.min_effect}. O gate decide pelo escopo geral e pela linha 'sem loop'; "
+        f"categorias com n pequeno têm IC largo.</sub>",
     ]
     return "\n".join(lines)

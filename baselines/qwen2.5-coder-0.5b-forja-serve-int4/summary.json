@@ -16,7 +16,7 @@
   },
   "duracao_s": 5111.398357500002,
   "geral": {
-    "score": 0.2727272727272727,
+    "score": 0.18181818181818182,
     "n": 11,
     "n_total": 16,
     "n_erros": 0,
@@ -40,7 +40,7 @@
       "n": 0
     },
     "recusa": {
-      "score": 0.3333333333333333,
+      "score": 0.0,
       "n": 3
     }
   },
@@ -58,5 +58,10 @@
     "juiz": 0.0,
     "modelo_por_1k_req": 0.0
   },
-  "recusas_indevidas": 1
+  "saude": {
+    "n": 16,
+    "taxa_degeneradas": 0.5,
+    "taxa_truncadas": 0.5
+  },
+  "recusas_indevidas": 0
 }

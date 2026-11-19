@@ -22,11 +22,33 @@ REFUSAL_PATTERNS = [
     r"\bnao (e|seria) possivel (determinar|saber|afirmar|dizer|responder)\b",
     r"\bnao (consigo|da para|da pra|posso) (determinar|afirmar|saber|dizer|responder)\b",
     r"\bsem (mais |o )?(contexto|codigo|acesso)\b",
-    r"\bnao existe\b",
+    # "não existe" só vale para parâmetro/opção inventado (recusa-0002). Solto, casava com
+    # "usa `calcula`, que não existe", que é o modelo AFIRMANDO um bug, não recusando.
+    r"\b(parametro|argumento|opcao|flag|atributo)\b[^.\n]{0,80}\bnao existe\b",
+    r"\bnao (existe|ha|tem) (nenhum |nenhuma |esse |essa |um |uma |o |a |tal )?"
+    r"(parametro|argumento|opcao|flag|atributo)\b",
+    r"\bnao (aceita|suporta|possui) (um |o |esse |nenhum |tal )?(parametro|argumento|opcao)\b",
     r"\bnao tenho (acesso|certeza)\b",
     r"\bpreciso (de mais|ver o|do codigo)\b",
 ]
 _REFUSAL_RE = re.compile("|".join(REFUSAL_PATTERNS))
+
+
+# Degeneração: fração de 8-gramas de palavras repetidos. Calibrado nas respostas reais: respostas
+# saudáveis ficam ≤ 0,16 (listas de exemplos repetem estrutura); loops ficam entre 0,36 e 0,93.
+REPETITION_N = 8
+DEGENERATION_THRESHOLD = 0.3
+
+
+def repetition(text: str, n: int = REPETITION_N) -> float:
+    """0 = nenhum n-grama repetido; perto de 1 = o texto é a mesma frase em loop."""
+    words = re.findall(r"\w+", text.casefold())
+    grams = [tuple(words[i : i + n]) for i in range(len(words) - n + 1)]
+    return 0.0 if not grams else 1 - len(set(grams)) / len(grams)
+
+
+def degenerate(text: str) -> bool:
+    return repetition(text) >= DEGENERATION_THRESHOLD
 
 
 def normalize(text: str) -> str:
@@ -84,7 +106,13 @@ def keyword_recall(text: str, keywords: list[str]) -> float:
 
 def deterministic(case: EvalCase, output: str, *, timeout_s: float = 10.0) -> dict[str, Any]:
     """Retorna métricas e `score_det` (0..1) quando a categoria permite verificação automática."""
-    m: dict[str, Any] = {"recusou": is_refusal(output), "score_det": None}
+    rep = repetition(output)
+    m: dict[str, Any] = {
+        "recusou": is_refusal(output),
+        "repeticao": round(rep, 3),
+        "degenerou": rep >= DEGENERATION_THRESHOLD,
+        "score_det": None,
+    }
     meta = case.metadados
 
     if case.categoria == Categoria.RECUSA:

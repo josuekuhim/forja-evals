@@ -62,11 +62,16 @@ class FakeOpenAI:
             text = json.dumps({"justificativa": "ok", "nota": nota})
         else:
             case = self.by_input[user]
-            text = resposta_boa(case) if model == "bom" else resposta_ruim(case)
+            text = resposta_boa(case) if model in ("bom", "loop") else resposta_ruim(case)
+        finish = "stop"
+        if model == "loop" and case.categoria.value in ("explicacao", "api"):
+            # Mesma nota do "bom" (o juiz vê BOM), mas a resposta degenera em loop e é cortada.
+            text += "\n" + "Isso é importante porque a função retorna o valor. " * 40
+            finish = "length"
         return httpx.Response(
             200,
             json={
-                "choices": [{"message": {"role": "assistant", "content": text}}],
+                "choices": [{"message": {"role": "assistant", "content": text}, "finish_reason": finish}],
                 "usage": {"prompt_tokens": len(user) // 4, "completion_tokens": len(text) // 4},
             },
         )

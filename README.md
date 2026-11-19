@@ -42,13 +42,23 @@ Lição de infraestrutura: o timeout HTTP padrão (120 s) é menor que um julgam
 
 ### Primeiro uso como gate: quantização no forja-serve
 
-O [forja-serve](../forja-serve) serviu o Qwen2.5-Coder-0.5B em fp32, int8 e int4, e o `compare` rodou cada um contra o fp32 (`baselines/qwen2.5-coder-0.5b-forja-serve-*`). Resultado: **os dois passaram**, 0,18 → 0,18 (int8) e 0,18 → 0,27 (int4). Só que o int4 entra em loop em 8 de 16 respostas, contra 2 no fp32. O gate não viu por três motivos:
+O [forja-serve](../forja-serve) serviu o Qwen2.5-Coder-0.5B em fp32, int8 e int4, e o `compare` rodou cada variante contra o fp32. Na primeira versão do gate, **os dois passaram**, mas o int4 entrava em loop em 8 de 16 respostas. O gate não viu por três motivos:
 
-- **efeito chão:** as métricas já estão em ~0 no fp32, então não têm para onde cair;
-- **falso positivo da regex de recusa:** em `recusa-0003`, "não existe" foi contado como recusa;
-- **falta métrica de degeneração:** não há taxa de resposta truncada nem de repetição.
+- **efeito chão:** a nota do 0.5B já estava em ~0 no fp32;
+- **falso positivo da regex de recusa:** "`calcula`, que não existe" era o modelo afirmando um bug, não recusando;
+- **falta de métrica de degeneração.**
 
-Próxima versão da régua: medir a taxa de truncamento por `max_tokens` e a repetição de n-gramas, e deixar a regex de recusa mais estrita.
+O que mudou na régua:
+
+| Mudança | Onde |
+| --- | --- |
+| `repeticao` (fração de 8-gramas repetidos) e `degenerou` (≥ 0,30) em todo caso. O limiar foi calibrado nas respostas reais: as saudáveis ficam ≤ 0,16, os loops entre 0,36 e 0,93. | `metrics.py` |
+| `finish_reason` salvo por caso; `saude` no resumo (taxa em loop e taxa cortada por `max_tokens`) | `client.py`, `runner.py` |
+| Gate: bootstrap pareado da fração **sem loop** em todos os casos (não só nos que têm nota). Uma regressão ali bloqueia, mesmo com a nota empatada. | `gate.py` |
+| A regex de recusa aceita "não existe" só quando se refere a parâmetro/opção | `metrics.py` |
+| `forja-evals rescore <runs>`: recalcula métricas e resumo de runs salvos quando a régua muda, sem chamar modelo | `cli.py` |
+
+Depois do `rescore`, o resultado ficou assim: o int8 é aprovado (1/16 em loop, igual ao fp32) e o int4 é **reprovado**, com 50% das respostas em loop e Δ −0,44 na fração sem loop, IC [−0,69; −0,19]. As notas dos baselines do 1.5B não mudaram (0,273 e 0,422).
 
 ## Determinismo (e por que a config local usa 1 slot)
 
@@ -90,6 +100,7 @@ uv run forja-evals run configs/qwen-base-local.yaml          # precisa de um end
 uv run forja-evals run configs/api-referencia.yaml           # precisa de OPENROUTER_API_KEY
 uv run forja-evals report runs/<a> runs/<b>                  # tabela do hub
 uv run forja-evals compare runs/<baseline> runs/<candidato>  # gate (exit 1 se regrediu)
+uv run forja-evals rescore baselines/*                        # régua mudou: recalcula sem chamar modelo
 uv run forja-evals label runs/<id> --n 30                    # rotulagem humana às cegas
 uv run forja-evals kappa runs/<id>
 uv run forja-evals pairs datasets/<treino> runs/<a> runs/<b> --out pairs.jsonl

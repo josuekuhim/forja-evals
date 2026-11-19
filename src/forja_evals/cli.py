@@ -13,7 +13,7 @@ from forja_contracts import write_jsonl
 
 from forja_evals import calibration, gate, pairs, report
 from forja_evals.datasets import load_dataset
-from forja_evals.runner import RunConfig, run_eval
+from forja_evals.runner import RunConfig, rescore, run_eval
 
 app = typer.Typer(help="forja-evals: a régua do Forja.", no_args_is_help=True)
 
@@ -61,6 +61,18 @@ def compare(
     _github_output("regressao", str(cmp.regressao).lower())
     if cmp.regressao and fail_on_regression:
         raise typer.Exit(code=1)
+
+
+@app.command("rescore")
+def rescore_cmd(runs: list[Path]) -> None:
+    """Recalcula métricas e resumo de runs salvos quando a régua muda (não chama modelo nem juiz)."""
+    for r in runs:
+        s = rescore(r)
+        g, h = s["geral"], s["saude"]
+        typer.echo(
+            f"{r}: score {g['score']:.3f} (n={g['n']})  loops {h['taxa_degeneradas']:.0%}  "
+            f"cortadas {h['taxa_truncadas']:.0%}"
+        )
 
 
 @app.command("report")

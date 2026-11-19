@@ -2,7 +2,15 @@ import pytest
 from forja_contracts import Categoria, EvalCase
 
 from forja_evals import judge
-from forja_evals.metrics import deterministic, extract_code, is_refusal, keyword_recall, run_python_tests
+from forja_evals.metrics import (
+    degenerate,
+    deterministic,
+    extract_code,
+    is_refusal,
+    keyword_recall,
+    repetition,
+    run_python_tests,
+)
 
 
 def test_extract_code_prefere_python():
@@ -26,6 +34,9 @@ def test_run_python_tests():
         ("Não há contexto suficiente para afirmar.", True),
         ("Sem o código da função, não dá para dizer.", True),
         ("A função retorna uma lista ordenada.", False),
+        ("O json.dumps não tem um parâmetro chamado turbo_mode.", True),
+        # recusa-0003 no int4: afirma um bug ("não existe") em vez de pedir contexto.
+        ("Está usando `calcula` como uma função, que não existe. Para corrigir, defina-a.", False),
     ],
 )
 def test_recusa(texto, esperado):
@@ -67,3 +78,11 @@ def test_nota_to_score():
     assert judge.nota_to_score(1) == 0.0
     assert judge.nota_to_score(5) == 1.0
     assert judge.nota_to_score(None) is None
+
+
+def test_repeticao_e_degeneracao():
+    normal = "A função filtra os pares da lista e devolve uma nova lista, sem alterar a original."
+    loop = "Além disso, f deve ser chamada com i e não com i(i). " * 20
+    assert repetition(normal) == 0.0 and not degenerate(normal)
+    assert repetition(loop) > 0.9 and degenerate(loop)
+    assert repetition("curto") == 0.0

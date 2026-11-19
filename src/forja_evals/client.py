@@ -48,6 +48,7 @@ class ChatResult:
     latency_s: float
     cost_usd: float
     cached: bool = False
+    finish_reason: str | None = None  # "length" = cortada por max_tokens
 
 
 class ChatClient:
@@ -148,6 +149,7 @@ class ChatClient:
                             completion_tokens=ct,
                             latency_s=time.perf_counter() - t0,
                             cost_usd=self.cost(pt, ct),
+                            finish_reason=data["choices"][0].get("finish_reason"),
                         )
                         if self.cache:
                             self.cache.set(key, {k: v for k, v in asdict(res).items() if k != "cached"})

@@ -58,5 +58,10 @@
     "juiz": 0.0,
     "modelo_por_1k_req": 0.0
   },
+  "saude": {
+    "n": 16,
+    "taxa_degeneradas": 0.0625,
+    "taxa_truncadas": 0.125
+  },
   "recusas_indevidas": 0
 }

@@ -7,6 +7,7 @@ import pytest
 from typer.testing import CliRunner
 
 from forja_evals import calibration, gate, pairs, report
+from forja_evals import runner as runner_mod
 from forja_evals.cli import app
 from forja_evals.runner import load_run, run_eval
 from tests.conftest import SEED, FakeOpenAI, make_cfg
@@ -134,3 +135,24 @@ def test_extra_body_vai_na_requisicao(tmp_path, fake):
     cfg.modelo.extra_body = {"cache_prompt": False}
     asyncio.run(run_eval(cfg, out_root=tmp_path / "runs", transport=httpx.MockTransport(fake), limit=2))
     assert fake.calls and all(c["cache_prompt"] is False for c in fake.calls)
+
+
+def test_gate_pega_loop_que_a_nota_nao_ve(tmp_path, fake):
+    """Efeito chão: a nota empata, mas o candidato entra em loop onde não há métrica. O gate bloqueia."""
+    base, cand = _run("bom", tmp_path, fake), _run("loop", tmp_path, fake)
+    cs, rows = load_run(cand)
+    assert cs["geral"]["score"] == load_run(base)[0]["geral"]["score"]
+    assert cs["saude"]["taxa_degeneradas"] == cs["saude"]["taxa_truncadas"] == 5 / 16
+    assert {r["finish_reason"] for r in rows} == {"stop", "length"}
+    cmp = gate.compare(base, cand)
+    assert cmp.regressao and cmp.geral.mean_diff == 0
+    assert "loop" in cmp.alertas[0]
+    assert "sem loop" in gate.to_markdown(cmp)
+
+
+def test_rescore_reproduz_o_run(tmp_path, fake):
+    out = _run("bom", tmp_path, fake)
+    antes = load_run(out)[0]
+    depois = runner_mod.rescore(out)
+    assert depois["geral"] == antes["geral"] and depois["saude"] == antes["saude"]
+    assert depois["ref"] == antes["ref"]
