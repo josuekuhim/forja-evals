@@ -11,7 +11,7 @@ import typer
 import yaml
 from forja_contracts import write_jsonl
 
-from forja_evals import calibration, gate, pairs, report
+from forja_evals import calibration, gate, online, pairs, report
 from forja_evals.datasets import load_dataset
 from forja_evals.runner import RunConfig, rescore, run_eval
 
@@ -61,6 +61,17 @@ def compare(
     _github_output("regressao", str(cmp.regressao).lower())
     if cmp.regressao and fail_on_regression:
         raise typer.Exit(code=1)
+
+
+@app.command("online")
+def online_cmd(
+    config: Annotated[Path, typer.Argument(help="YAML do eval online")],
+    out: Annotated[Path, typer.Option(help="Diretório das execuções")] = Path("runs"),
+) -> None:
+    """Evals online: julga uma amostra dos traces do forja-review e compara o juiz com o 👍/👎 humano."""
+    run_dir = asyncio.run(online.run_online(online.OnlineConfig.from_yaml(config), out_root=out))
+    typer.echo((run_dir / "online.md").read_text(encoding="utf-8"))
+    typer.echo(f"\nResultados em {run_dir}")
 
 
 @app.command("rescore")

@@ -1,0 +1,15 @@
+# Eval online do forja-review: amostra dos traces OpenTelemetry, julgada pelo Gemma local.
+nome: forja-review-traces-locais
+traces: ../forja-review/traces
+juiz:
+  base_url: http://127.0.0.1:8001/v1
+  model: ggml-org/gemma-4-26B-A4B-it-Q4_0
+juiz_geracao:
+  temperature: 0.0
+  max_tokens: 8192   # o Gemma raciocina antes do JSON; 4096 já cortou uma review no forja-review
+  seed: 0
+amostra: 12
+seed: 0
+concorrencia: 1
+timeout_s: 1800
+cache: .cache/forja-evals.sqlite
