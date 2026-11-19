@@ -40,6 +40,16 @@ Lição de infraestrutura: o timeout HTTP padrão (120 s) é menor que um julgam
 
 **Ainda não vale como régua**: falta rotular as respostas (`forja-evals label`) e medir o kappa juiz × humano (`forja-evals kappa`).
 
+### Primeiro uso como gate: quantização no forja-serve
+
+O [forja-serve](../forja-serve) serviu o Qwen2.5-Coder-0.5B em fp32, int8 e int4, e o `compare` rodou cada um contra o fp32 (`baselines/qwen2.5-coder-0.5b-forja-serve-*`). Resultado: **os dois passaram**, 0,18 → 0,18 (int8) e 0,18 → 0,27 (int4). Só que o int4 entra em loop em 8 de 16 respostas, contra 2 no fp32. O gate não viu por três motivos:
+
+- **efeito chão:** as métricas já estão em ~0 no fp32, então não têm para onde cair;
+- **falso positivo da regex de recusa:** em `recusa-0003`, "não existe" foi contado como recusa;
+- **falta métrica de degeneração:** não há taxa de resposta truncada nem de repetição.
+
+Próxima versão da régua: medir a taxa de truncamento por `max_tokens` e a repetição de n-gramas, e deixar a regex de recusa mais estrita.
+
 ## Determinismo (e por que a config local usa 1 slot)
 
 Na primeira execução com `--parallel 2`, **só 1 de 16 respostas** se repetiu entre duas rodadas com temperatura 0, e uma nota mudou. Isolando:

@@ -1,0 +1,62 @@
+{
+  "ref": {
+    "run_id": "20261119-035913-qwen2-5-coder-0-5b-forja-serve-int8",
+    "dataset_hash": "ae38b2812cc903d3c11cd02f790558fc0a23d2f15f1fb835eb725219c7ea30f7",
+    "modelo": "qwen2.5-coder-0.5b-int8",
+    "criado_em": "2026-11-19T03:59:13.146581Z",
+    "url": null
+  },
+  "nome": "qwen2.5-coder-0.5b-forja-serve-int8",
+  "dataset": {
+    "nome": "forja-seed-v0",
+    "hash": "ae38b2812cc903d3c11cd02f790558fc0a23d2f15f1fb835eb725219c7ea30f7",
+    "uso": "avaliacao",
+    "n_casos": 16,
+    "parcial": false
+  },
+  "duracao_s": 919.0329906000006,
+  "geral": {
+    "score": 0.18181818181818182,
+    "n": 11,
+    "n_total": 16,
+    "n_erros": 0,
+    "n_sem_score": 5
+  },
+  "por_categoria": {
+    "api": {
+      "score": null,
+      "n": 0
+    },
+    "correcao": {
+      "score": 0.5,
+      "n": 4
+    },
+    "deteccao_bug": {
+      "score": 0.0,
+      "n": 4
+    },
+    "explicacao": {
+      "score": null,
+      "n": 0
+    },
+    "recusa": {
+      "score": 0.0,
+      "n": 3
+    }
+  },
+  "latencia_s": {
+    "p50": 43.93931259999954,
+    "p95": 173.52148712500184,
+    "p99": 175.59516950500165
+  },
+  "tokens": {
+    "prompt": 3131,
+    "completion": 4203
+  },
+  "custo_usd": {
+    "modelo": 0.0,
+    "juiz": 0.0,
+    "modelo_por_1k_req": 0.0
+  },
+  "recusas_indevidas": 0
+}

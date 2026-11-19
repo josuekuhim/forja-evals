@@ -1,0 +1,14 @@
+# Qwen2.5-Coder-0.5B servido pelo forja-serve (engine próprio), variante int8. Só métricas determinísticas.
+# Gate de quantização: forja-evals compare <run fp32> <run int8|int4>.
+nome: qwen2.5-coder-0.5b-forja-serve-int8
+dataset: datasets/forja-seed-v0
+modelo:
+  base_url: http://127.0.0.1:8000/v1
+  model: qwen2.5-coder-0.5b-int8
+geracao:
+  temperature: 0.0
+  max_tokens: 1024
+  seed: 0
+concorrencia: 1   # um pedido por vez: batch muda a ordem das somas e pode virar um argmax
+cache: null
+timeout_s: 900    # int4 em CPU gera ~1,7 tok/s; 1024 tokens passam de 10 min

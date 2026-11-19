@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import sys
 from pathlib import Path
 from typing import Annotated
 
@@ -15,6 +16,11 @@ from forja_evals.datasets import load_dataset
 from forja_evals.runner import RunConfig, run_eval
 
 app = typer.Typer(help="forja-evals: a régua do Forja.", no_args_is_help=True)
+
+# No Windows, stdout redirecionado (pipe, CI) vem em cp1252 e o markdown do gate (✅/❌) quebra.
+for _s in (sys.stdout, sys.stderr):
+    if hasattr(_s, "reconfigure"):
+        _s.reconfigure(encoding="utf-8")
 
 
 @app.command()
