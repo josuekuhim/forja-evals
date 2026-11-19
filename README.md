@@ -13,9 +13,32 @@ Qwen2.5-Coder-1.5B-Instruct (GGUF Q4_K_M) em CPU (Ryzen 5 5625U, 4 threads) via 
 | correcao | 3/4 | No palíndromo, afirmou que o código já estava correto |
 | deteccao_bug | 0/4 | Diagnóstico errado nos quatro; "correções" iguais ao original ou com bug novo |
 | recusa | 0/3 | Inventou o retorno de `processa_pedido` e um tutorial do inexistente `turbo_mode` do `json.dumps` |
-| explicacao, api | — | Aguardam o juiz |
+| explicacao, api | — | Sem juiz (ver abaixo) |
 
 Score geral 0,273 em 11 casos com nota; latência p50 de 9,9s. É exatamente o que o pós-treino precisa atacar: alucinação confiante e diagnóstico de bug.
+
+### Com juiz local: Gemma 4 26B-A4B
+
+Mesmo modelo, agora com o juiz [`ggml-org/gemma-4-26B-A4B-it-Q4_0`](configs/qwen-base-local-juiz-gemma.yaml) também em CPU (MoE, ~4B parâmetros ativos, ~8 tok/s). Resultado em [`baselines/qwen2.5-coder-1.5b-q4km-juiz-gemma4-26b`](baselines/qwen2.5-coder-1.5b-q4km-juiz-gemma4-26b):
+
+| Categoria | Score | Fonte |
+| --- | --- | --- |
+| explicacao | 0,75 | juiz: 5, 5 e 2 (no 0001 o exemplo diz que 17 ≥ 18) |
+| api | 0,75 | juiz: 5 e 3 (no 0001 afirma que tipos diferentes são comparados como string; em Python 3 é `TypeError`) |
+| correcao | 3/4 | testes (iguais ao baseline sem juiz) |
+| deteccao_bug | 0/4 | determinístico; o juiz deu nota 1 nos quatro, concordando |
+| recusa | 0/3 | regex de recusa |
+
+Score geral **0,422** em 16 casos; 33 min para o run inteiro (o juiz raciocina ~1.300 tokens por caso).
+
+O juiz avalia todos os casos, mas **a métrica determinística tem precedência** quando existe, e isso já se pagou:
+
+- `recusa-0003` ("essa linha tem bug?" com uma linha sem contexto): o modelo afirmou que **tem** bug porque `calcula` "não está definida". O juiz deu **5**; a regex de recusa deu 0, que é o certo. Juiz complacente é o erro clássico, e é por isso que ele é fallback.
+- `correcao-0001/0002`: testes passam, mas o juiz deu 4 e 3 porque o modelo disse que o código original "já estava correto". O teste não vê isso; o juiz vê. Dá argumento para uma nota mista (testes + juiz) em `correcao` numa v2.
+
+Lição de infraestrutura: o timeout HTTP padrão (120 s) é menor que um julgamento longo a 8 tok/s. O cliente cancelava, tentava de novo e o mesmo caso recomeçava em loop. Agora há `timeout_s` e `juiz_timeout_s` na config.
+
+**Ainda não vale como régua**: falta rotular as respostas (`forja-evals label`) e medir o kappa juiz × humano (`forja-evals kappa`).
 
 ## Determinismo (e por que a config local usa 1 slot)
 

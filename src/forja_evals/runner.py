@@ -39,11 +39,18 @@ class RunConfig(BaseModel):
     modelo: Endpoint
     geracao: Geracao = Field(default_factory=Geracao)
     juiz: Endpoint | None = None
+    # Juízes com raciocínio (thinking) gastam tokens antes do JSON; 300 corta a resposta no meio.
+    juiz_geracao: Geracao = Field(default_factory=lambda: Geracao(max_tokens=1024))
+    juiz_concorrencia: int | None = None  # None = mesma do modelo
     system_prompt: str = SYSTEM_PROMPT
     concorrencia: int = 8
     rpm: int | None = None
     cache: str | None = ".cache/forja-evals.sqlite"
     timeout_testes_s: float = 10.0
+    # Tempo máximo de uma requisição HTTP. Juiz local com raciocínio em CPU passa fácil de 120 s;
+    # se o timeout for menor que a geração, o cliente cancela e tenta de novo para sempre.
+    timeout_s: float = 120.0
+    juiz_timeout_s: float | None = None  # None = mesmo do modelo
 
     @classmethod
     def from_yaml(cls, path: str | Path) -> RunConfig:
@@ -77,7 +84,7 @@ async def _eval_case(
     nota = None
     if judge is not None:
         try:
-            jr = await judge.chat(judge_mod.build_messages(case, res.text), temperature=0.0, max_tokens=300)
+            jr = await judge.chat(judge_mod.build_messages(case, res.text), **cfg.juiz_geracao.model_dump())
             nota, just = judge_mod.parse(jr.text)
             row["juiz"] = {"nota": nota, "justificativa": just, "cost_usd": jr.cost_usd}
         except Exception as e:
@@ -141,10 +148,17 @@ async def run_eval(
     created = datetime.now(UTC)
     run_id = f"{created:%Y%m%d-%H%M%S}-{_slug(cfg.nome)}"
 
-    kw = dict(concurrency=cfg.concorrencia, rpm=cfg.rpm, cache=cache, transport=transport)
+    kw = dict(
+        concurrency=cfg.concorrencia, rpm=cfg.rpm, cache=cache, transport=transport, timeout_s=cfg.timeout_s
+    )
     try:
         async with ChatClient(cfg.modelo, **kw) as model:
-            judge = ChatClient(cfg.juiz, **kw) if cfg.juiz else None
+            jkw = {
+                **kw,
+                "concurrency": cfg.juiz_concorrencia or cfg.concorrencia,
+                "timeout_s": cfg.juiz_timeout_s or cfg.timeout_s,
+            }
+            judge = ChatClient(cfg.juiz, **jkw) if cfg.juiz else None
             try:
                 rows = await asyncio.gather(*(_eval_case(c, cfg, model, judge) for c in cases))
             finally:
