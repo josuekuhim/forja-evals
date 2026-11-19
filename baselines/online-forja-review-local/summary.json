@@ -1,0 +1,52 @@
+{
+  "nome": "forja-review-traces-locais",
+  "criado_em": "2026-11-19T18:28:00.353655+00:00",
+  "traces": {
+    "chamadas": 29,
+    "com_conteudo": 29,
+    "reviews": 12,
+    "comentarios_publicados": 35,
+    "feedback_humano": 0,
+    "problemas_de_formato": {
+      "comentario_vazio": 3,
+      "json_invalido": 5,
+      "resposta_cortada": 1
+    },
+    "duracao_s": {
+      "p50": 11.992645,
+      "p95": 801.0566905999991,
+      "p99": 2000.0395840399983
+    }
+  },
+  "amostra": {
+    "n": 12,
+    "seed": 0,
+    "julgados": 12,
+    "erros": 0
+  },
+  "juiz": {
+    "modelo": "ggml-org/gemma-4-26B-A4B-it-Q4_0",
+    "nota_media": 1.25,
+    "taxa_comentarios_uteis": 0.07142857142857142,
+    "por_modelo": {
+      "gemma-4-26b-a4b-q4": {
+        "n": 2,
+        "nota_media": 1.0,
+        "taxa_comentarios_uteis": null
+      },
+      "qwen2.5-coder-0.5b": {
+        "n": 3,
+        "nota_media": 1.0,
+        "taxa_comentarios_uteis": 0.0
+      },
+      "qwen2.5-coder-1.5b-q4km": {
+        "n": 7,
+        "nota_media": 1.4285714285714286,
+        "taxa_comentarios_uteis": 0.09090909090909091
+      }
+    }
+  },
+  "juiz_vs_humanos": {
+    "n": 0
+  }
+}

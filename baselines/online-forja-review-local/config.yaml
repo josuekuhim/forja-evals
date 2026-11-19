@@ -1,0 +1,18 @@
+nome: forja-review-traces-locais
+traces: ../forja-review/traces
+juiz:
+  base_url: http://127.0.0.1:8001/v1
+  model: ggml-org/gemma-4-26B-A4B-it-Q4_0
+  api_key_env: null
+  price_in_per_mtok: 0.0
+  price_out_per_mtok: 0.0
+  extra_body: {}
+juiz_geracao:
+  temperature: 0.0
+  max_tokens: 8192
+  seed: 0
+amostra: 12
+seed: 0
+concorrencia: 1
+timeout_s: 1800.0
+cache: .cache/forja-evals.sqlite

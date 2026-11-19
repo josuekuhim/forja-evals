@@ -75,7 +75,19 @@ def test_amostra_estavel_e_ignora_sem_conteudo():
         )
         for i in range(20)
     ]
+    calls.append(
+        LLMInteraction(
+            trace_id="t",
+            span_id="99",
+            repo="r",
+            arquivo="a",
+            modelo="m",
+            mensagens=[{"role": "user", "content": "d"}],
+            erro="timeout",
+        )
+    )
     a = sample(calls, 5, seed=1)
+    assert all(c.span_id != "99" for c in sample(calls, 50, seed=1))  # chamada que falhou não entra
     assert len(a) == 5 and all(c.mensagens for c in a)
     assert [c.span_id for c in a] == [c.span_id for c in sample(list(reversed(calls)), 5, seed=1)]
 

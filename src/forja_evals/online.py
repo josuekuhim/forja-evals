@@ -65,7 +65,7 @@ class OnlineConfig(BaseModel):
 
 def sample(calls: list[LLMInteraction], n: int, seed: int) -> list[LLMInteraction]:
     """Amostra estável: mesma seed e mesmos traces → mesmos casos, em qualquer ordem de leitura."""
-    pool = sorted((c for c in calls if c.mensagens), key=lambda c: c.span_id)
+    pool = sorted((c for c in calls if c.mensagens and not c.erro), key=lambda c: c.span_id)
     return pool if len(pool) <= n else random.Random(seed).sample(pool, n)
 
 
@@ -184,6 +184,7 @@ async def run_online(
         "traces": {
             "chamadas": len(calls),
             "com_conteudo": sum(bool(c.mensagens) for c in calls),
+            "com_erro": sum(bool(c.erro) for c in calls),
             "reviews": len({c.trace_id for c in calls}),
             "comentarios_publicados": sum(len(c.comentarios) for c in calls),
             "feedback_humano": len(feedback),

@@ -60,6 +60,21 @@ O que mudou na régua:
 
 Depois do `rescore`, o resultado ficou assim: o int8 é aprovado (1/16 em loop, igual ao fp32) e o int4 é **reprovado**, com 50% das respostas em loop e Δ −0,44 na fração sem loop, IC [−0,69; −0,19]. As notas dos baselines do 1.5B não mudaram (0,273 e 0,422).
 
+### Eval online: o primeiro trace do forja-review
+
+O [forja-review](../forja-review) grava um span OpenTelemetry por chamada ao modelo (diff, resposta, comentários publicados). O `forja-evals online` sorteia uma amostra desses spans e o juiz julga **cada comentário** (útil ou não) e a review do arquivo (1 a 5). Quando houver 👍/👎 de usuários, o mesmo comando mede a concordância juiz × humanos.
+
+Primeira execução ([`baselines/online-forja-review-local`](baselines/online-forja-review-local)): 29 chamadas dos testes com bugs plantados, 12 sorteadas, juiz Gemma 4 26B local.
+
+| Modelo revisor | Reviews julgadas | Nota média (1-5) | Comentários úteis (juiz) |
+| --- | --- | --- | --- |
+| Qwen2.5-Coder 1.5B | 7 | 1,43 | 1 de 11 |
+| Qwen2.5-Coder 0.5B (forja-serve) | 3 | 1,00 | 0 de 3 |
+
+- **O juiz concorda com o gabarito.** O único comentário que ele marcou como útil é o único acerto real do 1.5B (o `//` que perde a última página). As justificativas citam os bugs que faltaram: argumento mutável, SQL injection, TTL invertido.
+- **Defeito encontrado e corrigido:** as 2 chamadas sorteadas do Gemma eram uma resposta cortada e uma que **abortou por timeout**. Chamada que falhou não publica nada e não deveria ser julgada. O contrato agora lê o status do span (`LLMInteraction.erro`), e a amostra exclui essas chamadas.
+- **Ainda não há humanos:** sem 👍/👎, a nota do juiz não está calibrada em produção. Isso só muda com o App instalado em repositórios reais.
+
 ## Determinismo (e por que a config local usa 1 slot)
 
 Na primeira execução com `--parallel 2`, **só 1 de 16 respostas** se repetiu entre duas rodadas com temperatura 0, e uma nota mudou. Isolando:
@@ -100,6 +115,7 @@ uv run forja-evals run configs/qwen-base-local.yaml          # precisa de um end
 uv run forja-evals run configs/api-referencia.yaml           # precisa de OPENROUTER_API_KEY
 uv run forja-evals report runs/<a> runs/<b>                  # tabela do hub
 uv run forja-evals compare runs/<baseline> runs/<candidato>  # gate (exit 1 se regrediu)
+uv run forja-evals online configs/online-forja-review-local.yaml  # evals online (traces do forja-review)
 uv run forja-evals rescore baselines/*                        # régua mudou: recalcula sem chamar modelo
 uv run forja-evals label runs/<id> --n 30                    # rotulagem humana às cegas
 uv run forja-evals kappa runs/<id>
