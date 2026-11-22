@@ -1,6 +1,6 @@
 # forja-evals
 
-**The yardstick of [Forja](../forja).** Everything trained or optimized in the system goes through here, with the same dataset and the same gate.
+**The yardstick of [Forja](https://github.com/josuekuhim/forja).** Everything trained or optimized in the system goes through here, with the same dataset and the same gate.
 
 > **Result:** it already did its job twice. As a gate, it **rejected** int4 quantization in forja-serve, after gaining a degeneration metric the score alone could not see. As a yardstick, it holds `review-eval-v0` (199 real bugs from 2025–2026 bug-fix commits plus 199 already-fixed files), where post-training on real data went from 9 to 27 bugs found with no forgetting on `forja-seed-v0`. Still pending: judge × human kappa and the first PR blocked by the gate in CI.
 
@@ -42,7 +42,7 @@ Infrastructure lesson: the default HTTP timeout (120 s) is shorter than a long j
 
 ### First use as a gate: quantization in forja-serve
 
-[forja-serve](../forja-serve) served Qwen2.5-Coder-0.5B in fp32, int8 and int4, and `compare` ran each variant against fp32. In the first version of the gate, **both passed**, but int4 looped in 8 of 16 answers. The gate missed it for three reasons:
+[forja-serve](https://github.com/josuekuhim/forja-serve) served Qwen2.5-Coder-0.5B in fp32, int8 and int4, and `compare` ran each variant against fp32. In the first version of the gate, **both passed**, but int4 looped in 8 of 16 answers. The gate missed it for three reasons:
 
 - **floor effect:** the 0.5B's score was already ~0 in fp32;
 - **a refusal-regex false positive:** "`calcula`, which does not exist" was the model asserting a bug, not refusing;
@@ -62,11 +62,11 @@ After `rescore`, the result: int8 is approved (1/16 in a loop, same as fp32) and
 
 ### Real bugs: `review-eval-v0`
 
-[`datasets/review-eval-v0`](datasets/review-eval-v0) is built by [forja-dados](../forja-dados) from bug-fix commits in public Python repositories with permissive licenses: 199 files before the fix (the answer key is the line the commit changed) and the same 199 files after it (no bug). The commits are from 2025–2026; forja-posttrain's real training data stops at 2024-09-19. It is marked `uso: avaliacao`, so `forja-posttrain` and `forja-evals pairs` refuse to train on it. The labeler that decides whether a commit is a bug fix was validated by hand: ~80% precision (95% CI 65–90%, n = 40). Its results are in the [forja-posttrain README](../forja-posttrain).
+[`datasets/review-eval-v0`](datasets/review-eval-v0) is built by [forja-dados](https://github.com/josuekuhim/forja-dados) from bug-fix commits in public Python repositories with permissive licenses: 199 files before the fix (the answer key is the line the commit changed) and the same 199 files after it (no bug). The commits are from 2025–2026; forja-posttrain's real training data stops at 2024-09-19. It is marked `uso: avaliacao`, so `forja-posttrain` and `forja-evals pairs` refuse to train on it. The labeler that decides whether a commit is a bug fix was validated by hand: ~80% precision (95% CI 65–90%, n = 40). Its results are in the [forja-posttrain README](https://github.com/josuekuhim/forja-posttrain).
 
 ### Online eval: the first forja-review trace
 
-[forja-review](../forja-review) records one OpenTelemetry span per model call (diff, answer, published comments). `forja-evals online` samples those spans, and the judge rates **each comment** (useful or not) and the file's review (1 to 5). Once there is 👍/👎 from users, the same command measures judge × human agreement.
+[forja-review](https://github.com/josuekuhim/forja-review) records one OpenTelemetry span per model call (diff, answer, published comments). `forja-evals online` samples those spans, and the judge rates **each comment** (useful or not) and the file's review (1 to 5). Once there is 👍/👎 from users, the same command measures judge × human agreement.
 
 First run ([`baselines/online-forja-review-local`](baselines/online-forja-review-local)): 29 calls from the planted-bug tests, 12 sampled, local Gemma 4 26B judge.
 
@@ -131,7 +131,7 @@ To serve the base model locally on CPU, use forja-serve, or serve a quantized GG
 ### Gate on a PR (in another Forja repository)
 
 ```yaml
-- uses: <user>/forja-evals@main
+- uses: josuekuhim/forja-evals@main
   with:
     config: evals/candidate.yaml
     baseline: evals/baseline     # committed run
