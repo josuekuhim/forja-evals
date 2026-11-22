@@ -1,0 +1,17 @@
+repo,licenca,url
+DataDog/integrations-core,BSD-3-Clause,https://github.com/DataDog/integrations-core
+PennyLaneAI/pennylane,Apache-2.0,https://github.com/PennyLaneAI/pennylane
+ROCm/TheRock,MIT,https://github.com/ROCm/TheRock
+ai2cm/ace,Apache-2.0,https://github.com/ai2cm/ace
+apache/airflow,Apache-2.0,https://github.com/apache/airflow
+datahub-project/datahub,Apache-2.0,https://github.com/datahub-project/datahub
+frappe/frappe,MIT,https://github.com/frappe/frappe
+getsentry/sentry-python,MIT,https://github.com/getsentry/sentry-python
+home-assistant/core,Apache-2.0,https://github.com/home-assistant/core
+huggingface/transformers,Apache-2.0,https://github.com/huggingface/transformers
+opsmill/infrahub,Apache-2.0,https://github.com/opsmill/infrahub
+pydantic/pydantic-ai,MIT,https://github.com/pydantic/pydantic-ai
+pytorch/torchtitan,BSD-3-Clause,https://github.com/pytorch/torchtitan
+ray-project/ray,Apache-2.0,https://github.com/ray-project/ray
+ukaea/PROCESS,MIT,https://github.com/ukaea/PROCESS
+vllm-project/vllm,Apache-2.0,https://github.com/vllm-project/vllm

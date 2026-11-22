@@ -1,145 +1,150 @@
 # forja-evals
 
-**A régua do [Forja](../forja).** Tudo que é treinado ou otimizado no sistema passa por aqui, com o mesmo dataset e o mesmo gate.
+**The yardstick of [Forja](../forja).** Everything trained or optimized in the system goes through here, with the same dataset and the same gate.
 
-> Resultado: _pendente_ — kappa juiz vs. humano e o primeiro PR bloqueado pelo gate entram aqui.
+> **Result:** it already did its job twice. As a gate, it **rejected** int4 quantization in forja-serve, after gaining a degeneration metric the score alone could not see. As a yardstick, it holds `review-eval-v0` (199 real bugs from 2025–2026 bug-fix commits plus 199 already-fixed files), where post-training on real data went from 9 to 27 bugs found with no forgetting on `forja-seed-v0`. Still pending: judge × human kappa and the first PR blocked by the gate in CI.
 
-## Primeiro baseline real
+## First real baseline
 
-Qwen2.5-Coder-1.5B-Instruct (GGUF Q4_K_M) em CPU (Ryzen 5 5625U, 4 threads) via `llama-server`, com o prompt de sistema padrão e sem juiz ([`baselines/qwen2.5-coder-1.5b-q4km-sem-juiz`](baselines/qwen2.5-coder-1.5b-q4km-sem-juiz)):
+Qwen2.5-Coder-1.5B-Instruct (GGUF Q4_K_M) on CPU (Ryzen 5 5625U, 4 threads) via `llama-server`, with the default system prompt and no judge ([`baselines/qwen2.5-coder-1.5b-q4km-sem-juiz`](baselines/qwen2.5-coder-1.5b-q4km-sem-juiz)):
 
-| Categoria | Score | O que aconteceu |
+| Category | Score | What happened |
 | --- | --- | --- |
-| correcao | 3/4 | No palíndromo, afirmou que o código já estava correto |
-| deteccao_bug | 0/4 | Diagnóstico errado nos quatro; "correções" iguais ao original ou com bug novo |
-| recusa | 0/3 | Inventou o retorno de `processa_pedido` e um tutorial do inexistente `turbo_mode` do `json.dumps` |
-| explicacao, api | — | Sem juiz (ver abaixo) |
+| correcao (fix) | 3/4 | On the palindrome, it claimed the code was already correct |
+| deteccao_bug (bug detection) | 0/4 | Wrong diagnosis on all four; "fixes" identical to the original or with a new bug |
+| recusa (refusal) | 0/3 | Invented the return value of `processa_pedido` and a tutorial for `json.dumps`' nonexistent `turbo_mode` |
+| explicacao, api | — | No judge (see below) |
 
-Score geral 0,273 em 11 casos com nota; latência p50 de 9,9s. É exatamente o que o pós-treino precisa atacar: alucinação confiante e diagnóstico de bug.
+Overall score 0.273 on 11 scored cases; p50 latency of 9.9 s. That is exactly what post-training has to attack: confident hallucination and bug diagnosis.
 
-### Com juiz local: Gemma 4 26B-A4B
+### With a local judge: Gemma 4 26B-A4B
 
-Mesmo modelo, agora com o juiz [`ggml-org/gemma-4-26B-A4B-it-Q4_0`](configs/qwen-base-local-juiz-gemma.yaml) também em CPU (MoE, ~4B parâmetros ativos, ~8 tok/s). Resultado em [`baselines/qwen2.5-coder-1.5b-q4km-juiz-gemma4-26b`](baselines/qwen2.5-coder-1.5b-q4km-juiz-gemma4-26b):
+The same model, now with the judge [`ggml-org/gemma-4-26B-A4B-it-Q4_0`](configs/qwen-base-local-juiz-gemma.yaml), also on CPU (MoE, ~4B active parameters, ~8 tok/s). Result in [`baselines/qwen2.5-coder-1.5b-q4km-juiz-gemma4-26b`](baselines/qwen2.5-coder-1.5b-q4km-juiz-gemma4-26b):
 
-| Categoria | Score | Fonte |
+| Category | Score | Source |
 | --- | --- | --- |
-| explicacao | 0,75 | juiz: 5, 5 e 2 (no 0001 o exemplo diz que 17 ≥ 18) |
-| api | 0,75 | juiz: 5 e 3 (no 0001 afirma que tipos diferentes são comparados como string; em Python 3 é `TypeError`) |
-| correcao | 3/4 | testes (iguais ao baseline sem juiz) |
-| deteccao_bug | 0/4 | determinístico; o juiz deu nota 1 nos quatro, concordando |
-| recusa | 0/3 | regex de recusa |
+| explicacao (explanation) | 0.75 | judge: 5, 5 and 2 (in 0001 the example says 17 ≥ 18) |
+| api | 0.75 | judge: 5 and 3 (in 0001 it claims different types are compared as strings; in Python 3 it is a `TypeError`) |
+| correcao (fix) | 3/4 | tests (same as the no-judge baseline) |
+| deteccao_bug (bug detection) | 0/4 | deterministic; the judge gave 1 on all four, agreeing |
+| recusa (refusal) | 0/3 | refusal regex |
 
-Score geral **0,422** em 16 casos; 33 min para o run inteiro (o juiz raciocina ~1.300 tokens por caso).
+Overall score **0.422** on 16 cases; 33 min for the whole run (the judge reasons ~1,300 tokens per case).
 
-O juiz avalia todos os casos, mas **a métrica determinística tem precedência** quando existe, e isso já se pagou:
+The judge evaluates every case, but **the deterministic metric takes precedence** when there is one, and that has already paid off:
 
-- `recusa-0003` ("essa linha tem bug?" com uma linha sem contexto): o modelo afirmou que **tem** bug porque `calcula` "não está definida". O juiz deu **5**; a regex de recusa deu 0, que é o certo. Juiz complacente é o erro clássico, e é por isso que ele é fallback.
-- `correcao-0001/0002`: testes passam, mas o juiz deu 4 e 3 porque o modelo disse que o código original "já estava correto". O teste não vê isso; o juiz vê. Dá argumento para uma nota mista (testes + juiz) em `correcao` numa v2.
+- `recusa-0003` ("does this line have a bug?" with a line and no context): the model claimed it **has** a bug because `calcula` "is not defined". The judge gave **5**; the refusal regex gave 0, which is right. A lenient judge is the classic error, and that is why it is the fallback.
+- `correcao-0001/0002`: the tests pass, but the judge gave 4 and 3 because the model said the original code "was already correct". The test does not see that; the judge does. It argues for a mixed score (tests + judge) for `correcao` in a v2.
 
-Lição de infraestrutura: o timeout HTTP padrão (120 s) é menor que um julgamento longo a 8 tok/s. O cliente cancelava, tentava de novo e o mesmo caso recomeçava em loop. Agora há `timeout_s` e `juiz_timeout_s` na config.
+Infrastructure lesson: the default HTTP timeout (120 s) is shorter than a long judgment at 8 tok/s. The client cancelled, retried, and the same case restarted in a loop. There are now `timeout_s` and `juiz_timeout_s` in the config.
 
-**Ainda não vale como régua**: falta rotular as respostas (`forja-evals label`) e medir o kappa juiz × humano (`forja-evals kappa`).
+**Not yet valid as a yardstick:** the answers still need labeling (`forja-evals label`) and the judge × human kappa measured (`forja-evals kappa`).
 
-### Primeiro uso como gate: quantização no forja-serve
+### First use as a gate: quantization in forja-serve
 
-O [forja-serve](../forja-serve) serviu o Qwen2.5-Coder-0.5B em fp32, int8 e int4, e o `compare` rodou cada variante contra o fp32. Na primeira versão do gate, **os dois passaram**, mas o int4 entrava em loop em 8 de 16 respostas. O gate não viu por três motivos:
+[forja-serve](../forja-serve) served Qwen2.5-Coder-0.5B in fp32, int8 and int4, and `compare` ran each variant against fp32. In the first version of the gate, **both passed**, but int4 looped in 8 of 16 answers. The gate missed it for three reasons:
 
-- **efeito chão:** a nota do 0.5B já estava em ~0 no fp32;
-- **falso positivo da regex de recusa:** "`calcula`, que não existe" era o modelo afirmando um bug, não recusando;
-- **falta de métrica de degeneração.**
+- **floor effect:** the 0.5B's score was already ~0 in fp32;
+- **a refusal-regex false positive:** "`calcula`, which does not exist" was the model asserting a bug, not refusing;
+- **no degeneration metric.**
 
-O que mudou na régua:
+What changed in the yardstick:
 
-| Mudança | Onde |
+| Change | Where |
 | --- | --- |
-| `repeticao` (fração de 8-gramas repetidos) e `degenerou` (≥ 0,30) em todo caso. O limiar foi calibrado nas respostas reais: as saudáveis ficam ≤ 0,16, os loops entre 0,36 e 0,93. | `metrics.py` |
-| `finish_reason` salvo por caso; `saude` no resumo (taxa em loop e taxa cortada por `max_tokens`) | `client.py`, `runner.py` |
-| Gate: bootstrap pareado da fração **sem loop** em todos os casos (não só nos que têm nota). Uma regressão ali bloqueia, mesmo com a nota empatada. | `gate.py` |
-| A regex de recusa aceita "não existe" só quando se refere a parâmetro/opção | `metrics.py` |
-| `forja-evals rescore <runs>`: recalcula métricas e resumo de runs salvos quando a régua muda, sem chamar modelo | `cli.py` |
+| `repeticao` (fraction of repeated 8-grams) and `degenerou` (≥ 0.30) on every case. The threshold was calibrated on real answers: healthy ones stay ≤ 0.16, loops fall between 0.36 and 0.93. | `metrics.py` |
+| `finish_reason` saved per case; `saude` (health) in the summary (loop rate and rate cut by `max_tokens`) | `client.py`, `runner.py` |
+| Gate: paired bootstrap of the **loop-free** fraction over all cases (not only scored ones). A regression there blocks, even with a tied score. | `gate.py` |
+| The refusal regex accepts "does not exist" only when it refers to a parameter/option | `metrics.py` |
+| `forja-evals rescore <runs>`: recomputes metrics and summaries of saved runs when the yardstick changes, without calling the model | `cli.py` |
 
-Depois do `rescore`, o resultado ficou assim: o int8 é aprovado (1/16 em loop, igual ao fp32) e o int4 é **reprovado**, com 50% das respostas em loop e Δ −0,44 na fração sem loop, IC [−0,69; −0,19]. As notas dos baselines do 1.5B não mudaram (0,273 e 0,422).
+After `rescore`, the result: int8 is approved (1/16 in a loop, same as fp32) and int4 is **rejected**, with 50% of answers in a loop and Δ −0.44 on the loop-free fraction, CI [−0.69; −0.19]. The 1.5B baselines' scores did not change (0.273 and 0.422).
 
-### Eval online: o primeiro trace do forja-review
+### Real bugs: `review-eval-v0`
 
-O [forja-review](../forja-review) grava um span OpenTelemetry por chamada ao modelo (diff, resposta, comentários publicados). O `forja-evals online` sorteia uma amostra desses spans e o juiz julga **cada comentário** (útil ou não) e a review do arquivo (1 a 5). Quando houver 👍/👎 de usuários, o mesmo comando mede a concordância juiz × humanos.
+[`datasets/review-eval-v0`](datasets/review-eval-v0) is built by [forja-dados](../forja-dados) from bug-fix commits in public Python repositories with permissive licenses: 199 files before the fix (the answer key is the line the commit changed) and the same 199 files after it (no bug). The commits are from 2025–2026; forja-posttrain's real training data stops at 2024-09-19. It is marked `uso: avaliacao`, so `forja-posttrain` and `forja-evals pairs` refuse to train on it. The labeler that decides whether a commit is a bug fix was validated by hand: ~80% precision (95% CI 65–90%, n = 40). Its results are in the [forja-posttrain README](../forja-posttrain).
 
-Primeira execução ([`baselines/online-forja-review-local`](baselines/online-forja-review-local)): 29 chamadas dos testes com bugs plantados, 12 sorteadas, juiz Gemma 4 26B local.
+### Online eval: the first forja-review trace
 
-| Modelo revisor | Reviews julgadas | Nota média (1-5) | Comentários úteis (juiz) |
+[forja-review](../forja-review) records one OpenTelemetry span per model call (diff, answer, published comments). `forja-evals online` samples those spans, and the judge rates **each comment** (useful or not) and the file's review (1 to 5). Once there is 👍/👎 from users, the same command measures judge × human agreement.
+
+First run ([`baselines/online-forja-review-local`](baselines/online-forja-review-local)): 29 calls from the planted-bug tests, 12 sampled, local Gemma 4 26B judge.
+
+| Reviewer model | Reviews judged | Mean score (1-5) | Useful comments (judge) |
 | --- | --- | --- | --- |
-| Qwen2.5-Coder 1.5B | 7 | 1,43 | 1 de 11 |
-| Qwen2.5-Coder 0.5B (forja-serve) | 3 | 1,00 | 0 de 3 |
+| Qwen2.5-Coder 1.5B | 7 | 1.43 | 1 of 11 |
+| Qwen2.5-Coder 0.5B (forja-serve) | 3 | 1.00 | 0 of 3 |
 
-- **O juiz concorda com o gabarito.** O único comentário que ele marcou como útil é o único acerto real do 1.5B (o `//` que perde a última página). As justificativas citam os bugs que faltaram: argumento mutável, SQL injection, TTL invertido.
-- **Defeito encontrado e corrigido:** as 2 chamadas sorteadas do Gemma eram uma resposta cortada e uma que **abortou por timeout**. Chamada que falhou não publica nada e não deveria ser julgada. O contrato agora lê o status do span (`LLMInteraction.erro`), e a amostra exclui essas chamadas.
-- **Ainda não há humanos:** sem 👍/👎, a nota do juiz não está calibrada em produção. Isso só muda com o App instalado em repositórios reais.
+- **The judge agrees with the answer key.** The only comment it marked as useful is the 1.5B's only real hit (the `//` that loses the last page). Its justifications cite the missed bugs: mutable argument, SQL injection, inverted TTL.
+- **A defect found and fixed:** the 2 sampled Gemma calls were a truncated answer and one that **aborted on timeout**. A failed call publishes nothing and should not be judged. The contract now reads the span's status (`LLMInteraction.erro`), and the sample excludes those calls.
+- **No humans yet:** without 👍/👎, the judge's score is not calibrated in production. That only changes with the App installed on real repositories.
 
-## Determinismo (e por que a config local usa 1 slot)
+## Determinism (and why the local config uses 1 slot)
 
-Na primeira execução com `--parallel 2`, **só 1 de 16 respostas** se repetiu entre duas rodadas com temperatura 0, e uma nota mudou. Isolando:
+In the first run with `--parallel 2`, **only 1 of 16 answers** repeated between two runs at temperature 0, and one score changed. Isolating it:
 
-- Mesma requisição, 1 slot, sequencial: saída sempre idêntica.
-- Com o *prompt cache* do llama.cpp ligado, a saída muda conforme o prefixo (o system prompt, igual em todos os casos) é reaproveitado ou recalculado: a conta em ponto flutuante sai em outra ordem.
-- Com 2 slots, qual prefixo é reaproveitado depende da ordem de chegada, então cada execução dá um resultado.
+- Same request, 1 slot, sequential: always identical output.
+- With llama.cpp's *prompt cache* on, the output changes depending on whether the prefix (the system prompt, the same for every case) is reused or recomputed: the floating-point math runs in a different order.
+- With 2 slots, which prefix is reused depends on arrival order, so each run gives a different result.
 
-Correção: `extra_body: {cache_prompt: false}` no endpoint e `concorrencia: 1`. Resultado: **16/16 respostas idênticas** em duas execuções completas sem cache. Ruído que não vem do modelo vira regressão falsa no gate; isso volta como tema no forja-serve (batching vs. reprodutibilidade).
+Fix: `extra_body: {cache_prompt: false}` on the endpoint and `concorrencia: 1` (concurrency). Result: **16/16 identical answers** across two full runs without the cache. Noise that does not come from the model becomes a false regression in the gate; this comes back as a topic in forja-serve (batching vs. reproducibility).
 
-## O que faz
+## What it does
 
 | | |
 | --- | --- |
-| **Datasets versionados** | JSONL imutável; a versão é o SHA-256 do conteúdo. Comparar execuções com hashes diferentes é erro, não aviso. |
-| **Runner** | Assíncrono, para qualquer endpoint OpenAI-compatível (forja-serve, vLLM, APIs). Concorrência, rate limit, retry com backoff e `Retry-After`, cache em SQLite. |
-| **Métricas determinísticas** | Código sugerido compila e **passa nos testes** (subprocesso isolado com timeout), recusa detectada, palavras-chave do bug. |
-| **LLM-as-judge** | Rubrica por categoria, saída JSON, parsing tolerante. Só decide onde não há métrica determinística. |
-| **Calibração** | Rotulagem humana às cegas, estratificada e retomável; kappa de Cohen (simples e quadrático), viés médio do juiz. |
-| **Gate de regressão** | Bootstrap **pareado** (10k reamostragens), IC 95%, efeito mínimo. GitHub Action reutilizável. |
-| **Pares de preferência** | Gera pares para o DPO, e **recusa** datasets de avaliação (anti-circularidade). |
-| **Operacional** | Latência p50/p95/p99 (sem cache), tokens, custo total e por 1k requisições, erros de infraestrutura separados de erros do modelo. |
+| **Versioned datasets** | Immutable JSONL; the version is the content's SHA-256. Comparing runs with different hashes is an error, not a warning. |
+| **Runner** | Async, for any OpenAI-compatible endpoint (forja-serve, vLLM, APIs). Concurrency, rate limiting, retry with backoff and `Retry-After`, SQLite cache. |
+| **Deterministic metrics** | Suggested code compiles and **passes the tests** (isolated subprocess with a timeout), refusal detected, bug keywords. |
+| **LLM-as-judge** | Per-category rubric, JSON output, tolerant parsing. It only decides where there is no deterministic metric. |
+| **Calibration** | Blind, stratified, resumable human labeling; Cohen's kappa (simple and quadratic), mean judge bias. |
+| **Regression gate** | **Paired** bootstrap (10k resamples), 95% CI, minimum effect. Reusable GitHub Action. |
+| **Preference pairs** | Generates pairs for DPO, and **refuses** evaluation datasets (anti-circularity). |
+| **Operational** | p50/p95/p99 latency (without cache), tokens, total cost and cost per 1k requests, infrastructure errors separated from model errors. |
 
-## Decisões e trade-offs
+## Decisions and trade-offs
 
-- **Determinístico primeiro, juiz depois.** Se dá para verificar (testes passam? recusou?), essa é a nota. O juiz é caro, enviesado e precisa de calibração; ele só entra onde não tem outro jeito.
-- **Bootstrap pareado, não médias soltas.** Os dois sistemas respondem os mesmos casos; parear cancela a variância entre casos e o gate detecta quedas bem menores com o mesmo n.
-- **O gate decide pelo escopo geral.** Com ~15 casos por categoria, o IC por categoria é largo demais para bloquear build; regressões por categoria viram alerta.
-- **Erro de infraestrutura não é nota zero.** Timeout ou 5xx sai da média e é reportado. Se passar de 5% dos casos, o gate falha (avaliação inválida, não modelo ruim).
-- **Arquivos em vez de Postgres na v1.** Cada execução é um diretório (`config.yaml`, `results.jsonl`, `summary.json`) que dá para commitar como baseline. Postgres + dashboard entram na v2, junto com evals online.
+- **Deterministic first, judge second.** If it can be verified (do the tests pass? did it refuse?), that is the score. The judge is expensive, biased and needs calibration; it only comes in where there is no other way.
+- **Paired bootstrap, not loose means.** Both systems answer the same cases; pairing cancels the between-case variance, and the gate detects much smaller drops with the same n.
+- **The gate decides on the overall scope.** With ~15 cases per category, the per-category CI is too wide to block a build; per-category regressions become warnings.
+- **An infrastructure error is not a zero score.** A timeout or 5xx leaves the mean and is reported. If it exceeds 5% of cases, the gate fails (invalid evaluation, not a bad model).
+- **Files instead of Postgres in v1.** Each run is a directory (`config.yaml`, `results.jsonl`, `summary.json`) that can be committed as a baseline. Postgres + a dashboard come in v2.
 
-## Uso
+## Usage
 
 ```bash
 uv sync
 uv run forja-evals hash datasets/forja-seed-v0
-uv run forja-evals run configs/qwen-base-local.yaml          # precisa de um endpoint em localhost:8000
-uv run forja-evals run configs/api-referencia.yaml           # precisa de OPENROUTER_API_KEY
-uv run forja-evals report runs/<a> runs/<b>                  # tabela do hub
-uv run forja-evals compare runs/<baseline> runs/<candidato>  # gate (exit 1 se regrediu)
-uv run forja-evals online configs/online-forja-review-local.yaml  # evals online (traces do forja-review)
-uv run forja-evals rescore baselines/*                        # régua mudou: recalcula sem chamar modelo
-uv run forja-evals label runs/<id> --n 30                    # rotulagem humana às cegas
+uv run forja-evals run configs/qwen-base-local.yaml          # needs an endpoint at localhost:8000
+uv run forja-evals run configs/api-referencia.yaml           # needs OPENROUTER_API_KEY
+uv run forja-evals report runs/<a> runs/<b>                  # the hub table
+uv run forja-evals compare runs/<baseline> runs/<candidate>  # gate (exit 1 on regression)
+uv run forja-evals online configs/online-forja-review-local.yaml  # online evals (forja-review traces)
+uv run forja-evals rescore baselines/*                        # the yardstick changed: recompute without calling the model
+uv run forja-evals label runs/<id> --n 30                    # blind human labeling
 uv run forja-evals kappa runs/<id>
-uv run forja-evals pairs datasets/<treino> runs/<a> runs/<b> --out pairs.jsonl
+uv run forja-evals pairs datasets/<train> runs/<a> runs/<b> --out pairs.jsonl
 ```
 
-Para servir o modelo base localmente em CPU, sirva um GGUF quantizado com o `llama-server` (llama.cpp), que expõe `/v1/chat/completions` na porta configurada.
+To serve the base model locally on CPU, use forja-serve, or serve a quantized GGUF with `llama-server` (llama.cpp), which exposes `/v1/chat/completions` on the configured port.
 
-### Gate num PR (em outro repositório do Forja)
+### Gate on a PR (in another Forja repository)
 
 ```yaml
-- uses: <usuario>/forja-evals@main
+- uses: <user>/forja-evals@main
   with:
-    config: evals/candidato.yaml
-    baseline: evals/baseline     # execução commitada
+    config: evals/candidate.yaml
+    baseline: evals/baseline     # committed run
 ```
 
-## Categorias
+## Categories
 
-`explicacao` (juiz) · `deteccao_bug` (palavras-chave + juiz) · `correcao` (testes executados) · `api` (juiz vs. referência) · `recusa` (detecção de recusa).
+`explicacao` (explanation, judge) · `deteccao_bug` (bug detection, keywords + judge) · `correcao` (fix, executed tests) · `api` (judge vs. reference) · `recusa` (refusal detection).
 
-## Limitações
+## Limitations
 
-- `forja-seed-v0` tem 16 casos: valida o pipeline, não mede qualidade. A meta da v1 é ~50 por categoria, com rótulo humano.
-- A execução de testes **não é um sandbox**. No CI, rode em container descartável sem segredos nem rede.
-- Detecção de recusa por regex em português; tem falso negativo para recusas criativas (o juiz cobre).
-- Sem TTFT ainda: o runner não usa streaming. Entra junto com o forja-serve.
+- `forja-seed-v0` has 16 cases: it validates the pipeline and catches large damage, it does not measure fine quality differences. The v1 target is ~50 per category, with human labels.
+- Test execution **is not a sandbox**. In CI, run it in a disposable container with no secrets and no network.
+- Refusal detection is a Portuguese regex; it has false negatives for creative refusals (the judge covers them).
+- No TTFT yet: the runner does not use streaming.
+- Datasets, prompts and field names are in Portuguese, the target language of the models being measured.

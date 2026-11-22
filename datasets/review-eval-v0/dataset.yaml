@@ -1,0 +1,39 @@
+nome: review-eval-v0
+uso: avaliacao
+versao: 0
+descricao: Bugs reais (gabarito = commit de correção) para detecção de bug na review.
+  Nunca vira treino nem par de preferência.
+origem: 'github: clone parcial de 16 repositórios fixos (forja-dados/configs/v0.yaml);
+  forja-dados forja-dados@0.1.0+4a2c5bf1fa43'
+licenca: mista (MIT, Apache-2.0, BSD-2-Clause, BSD-3-Clause); ver licencas.csv
+dataset_hash: acc88c290ec69cfedb65d8164762ac4ff322794739d8f6c3b55906eaa150ea82
+pipeline_versao: forja-dados@0.1.0+4a2c5bf1fa43
+janela_eventos:
+  inicio: '2025-01-08T14:19:42Z'
+  fim: '2026-11-19T13:43:23Z'
+corte_treino: '2024-09-19T00:00:00Z'
+embargo_dias: 0
+seed: 0
+exemplos: 398
+sem_bug: 199
+bugs_por_classe:
+  outro: 199
+precisao_rotulador:
+  e_correcao:
+    ic95:
+    - 0.652
+    - 0.895
+    n: 40
+    valor: 0.8
+  classe: {}
+  rebaixadas: []
+  estimada: true
+  fonte: leitura de 40 commits sorteados (seed 7) pelo Claude, 2026-11-20; não é a
+    validação manual
+  ressalva: precisão de 'é correção?' estimada (~80%, IC95 65–90%), não validada à
+    mão; ~1 em 5 alvos pode ser commit que não corrige bug (tipagem, CI, teste, pin
+    de dependência)
+eval_minimo: '2025-01-01T00:00:00Z'
+gabarito: só do commit (nenhum modelo no meio)
+nota: 'Bugs reais (gabarito = commit de correção), eventos depois do embargo, split
+  só temporal. Classe `outro` sem palavra-chave: conte o achado pela linha (±tolerância).'

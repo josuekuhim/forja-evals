@@ -1,0 +1,14 @@
+# Qwen2.5-Coder-0.5B + LoRA de review treinado na T4 do Kaggle (forja-posttrain, review-misto-lora-t4), mesclado e servido pelo forja-serve em fp32.
+# Gate de esquecimento: forja-evals compare baselines/qwen2.5-coder-0.5b-forja-serve-fp32 <este run>.
+nome: qwen2.5-coder-0.5b-review-misto-t4-fp32
+dataset: datasets/forja-seed-v0
+modelo:
+  base_url: http://127.0.0.1:8000/v1
+  model: review-misto-t4
+geracao:
+  temperature: 0.0
+  max_tokens: 1024
+  seed: 0
+concorrencia: 1   # um pedido por vez: batch muda a ordem das somas e pode virar um argmax
+cache: null
+timeout_s: 900    # int4 em CPU gera ~1,7 tok/s; 1024 tokens passam de 10 min

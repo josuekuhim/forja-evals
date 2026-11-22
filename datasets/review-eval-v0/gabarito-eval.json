@@ -1,0 +1,1402 @@
+{
+ "arquivos": 398,
+ "arquivos_sem_bug": 199,
+ "bugs": [
+  {
+   "arquivo": "DataDog__integrations-core/postgres/datadog_checks/postgres/schemas.py",
+   "descricao": "outro (nenhuma): Fix schema owner (#22101)",
+   "linha": 72,
+   "origem": "github:DataDog/integrations-core@0dd77c64884ab8691d8e0cb432a3f6892e240654:postgres/datadog_checks/postgres/schemas.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/kafka_consumer/datadog_checks/kafka_consumer/kafka_consumer.py",
+   "descricao": "outro (nenhuma): Fix Protobuf with schema registry usage for kafka-actions (#22265)",
+   "linha": 772,
+   "origem": "github:DataDog/integrations-core@19bc7d4ebd74d90a932d32af0bd06683b0a15ef5:kafka_consumer/datadog_checks/kafka_consumer/kafka_consumer.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/kafka_consumer/datadog_checks/kafka_consumer/cluster_metadata.py",
+   "descricao": "outro (nenhuma): kafka_consumer: Fix caching bug (#22375)",
+   "linha": 204,
+   "origem": "github:DataDog/integrations-core@20a022e14ef6fbb424454b82e8c2179064c260d8:kafka_consumer/datadog_checks/kafka_consumer/cluster_metadata.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/sqlserver/datadog_checks/sqlserver/sqlserver.py",
+   "descricao": "outro (nenhuma): [sqlserver] Fix stale database metrics cache after autodiscovery changes (#22913)",
+   "linha": 166,
+   "origem": "github:DataDog/integrations-core@41a179684a8d7dc10ef1a875e02b61dafe8833a2:sqlserver/datadog_checks/sqlserver/sqlserver.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/spark/datadog_checks/spark/spark.py",
+   "descricao": "outro (nenhuma): fix(spark): remove unused loc and improve test coverage (#22128)",
+   "linha": 739,
+   "origem": "github:DataDog/integrations-core@4367a1486fbfb06ae2e538c01e8cf5493b2958d5:spark/datadog_checks/spark/spark.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/kafka_actions/datadog_checks/kafka_actions/kafka_client.py",
+   "descricao": "outro (nenhuma): Fix kafka_actions timeout when reading latest N messages (#22797)",
+   "linha": 10,
+   "origem": "github:DataDog/integrations-core@6006cb486c458660646671130ce7cc4334bf8294:kafka_actions/datadog_checks/kafka_actions/kafka_client.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/ibm_mq/datadog_checks/ibm_mq/metrics.py",
+   "descricao": "outro (divisao_vazia/guarda): fix(ibm_mq): avoid ZeroDivisionError when queue max depth is 0 (#24663)",
+   "linha": 164,
+   "origem": "github:DataDog/integrations-core@86542342a84b129f18bec1a2d09505dbd61f134e:ibm_mq/datadog_checks/ibm_mq/metrics.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/postgres/datadog_checks/postgres/explain_parameterized_queries.py",
+   "descricao": "outro (nenhuma): Fixed bug with no parameter prepared statements (#20243)",
+   "linha": 25,
+   "origem": "github:DataDog/integrations-core@874e58210ff5fa026f99f7dd5e319045da36ba42:postgres/datadog_checks/postgres/explain_parameterized_queries.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/ibm_mq/datadog_checks/ibm_mq/collectors/channel_metric_collector.py",
+   "descricao": "outro (nenhuma): fix(ibm_mq): handle non-UTF-8 description fields without crashing (#23130)",
+   "linha": 10,
+   "origem": "github:DataDog/integrations-core@9de0cc5be298ff9652ef66ed3c04cc32fd99dcfc:ibm_mq/datadog_checks/ibm_mq/collectors/channel_metric_collector.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/citrix_hypervisor/datadog_checks/citrix_hypervisor/check.py",
+   "descricao": "outro (nenhuma): Fix citrix_hypervisor failing tests (#19936)",
+   "linha": 4,
+   "origem": "github:DataDog/integrations-core@a94be36a4bb573ebfef98bf89ba51f590a30a807:citrix_hypervisor/datadog_checks/citrix_hypervisor/check.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/ddev/src/ddev/plugin/external/hatch/environment_collector.py",
+   "descricao": "outro (nenhuma): Fix type checking (#22421)",
+   "linha": 67,
+   "origem": "github:DataDog/integrations-core@bdd01aa8c7c61dc0cc0efb8bbcfcdda12aa41356:ddev/src/ddev/plugin/external/hatch/environment_collector.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/llm_d/datadog_checks/llm_d/check.py",
+   "descricao": "outro (nenhuma): Fix llm_d inference_pool tagging and align with llm-d v1.0.0 (#26044)",
+   "linha": 30,
+   "origem": "github:DataDog/integrations-core@e71828ef437a4f3f5baff5faf384f5ebfb356901:llm_d/datadog_checks/llm_d/check.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "DataDog__integrations-core/ddev/src/ddev/cli/env/start.py",
+   "descricao": "outro (nenhuma): Fix ddev env start not enabling the logs Agent for mounted logs on Linux and macOS (#25588)",
+   "linha": 216,
+   "origem": "github:DataDog/integrations-core@f03efababc7b202354a6edbeceaa8e5ff1d2fef3:ddev/src/ddev/cli/env/start.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/ops/op_math/pow2.py",
+   "descricao": "outro (nenhuma): Fix pow eigvals (#9802)",
+   "linha": 242,
+   "origem": "github:PennyLaneAI/pennylane@011a9e31b80104bfc528aacb94b8e2a16c14486a:pennylane/ops/op_math/pow2.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/templates/subroutines/select.py",
+   "descricao": "outro (nenhuma): Fix a bug in unary iteration for (comparably) few selected ops and `partial=False` (#9461)",
+   "linha": 1008,
+   "origem": "github:PennyLaneAI/pennylane@4505e243281248ec1ff33578c58c13943303c6c9:pennylane/templates/subroutines/select.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/capture/dynamic_shapes.py",
+   "descricao": "outro (nenhuma): Fix custom_staging_rule to not always return dynamically shaped arrays (#8004)",
+   "linha": 182,
+   "origem": "github:PennyLaneAI/pennylane@4789d0fed2ec00d39ab8ad18c747300cb5fb419e:pennylane/capture/dynamic_shapes.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/workflow/get_best_diff_method.py",
+   "descricao": "outro (nenhuma): Fix `get_best_diff_method` (#7898)",
+   "linha": 23,
+   "origem": "github:PennyLaneAI/pennylane@48566cf6466029b02b5dc2422fd0bb0adb3205ea:pennylane/workflow/get_best_diff_method.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/devices/qubit/initialize_state.py",
+   "descricao": "outro (nenhuma): Fix sparse state prep on default qubit (#7191)",
+   "linha": 55,
+   "origem": "github:PennyLaneAI/pennylane@5a868482850627fc99bad7d916ed8f82edf9249f:pennylane/devices/qubit/initialize_state.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/pauli/pauli_arithmetic.py",
+   "descricao": "outro (nenhuma): fix: update pauli arithmetic to handle abstract coefficients when jitted (#8190)",
+   "linha": 1019,
+   "origem": "github:PennyLaneAI/pennylane@68998c55909813927c2f0d0565636f5b43e3b89b:pennylane/pauli/pauli_arithmetic.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/drawer/mpldrawer.py",
+   "descricao": "outro (nenhuma): Fix MPL drawing of conditional operations (#10496)",
+   "linha": 565,
+   "origem": "github:PennyLaneAI/pennylane@6e3f3772560b30adee055c7f4216a8ea600324c2:pennylane/drawer/mpldrawer.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/math/interface_utils.py",
+   "descricao": "outro (nenhuma): Fix `InterfaceEnum` object (#6877)",
+   "linha": 48,
+   "origem": "github:PennyLaneAI/pennylane@721acb263c67ba7aa508257b214716f96858d377:pennylane/math/interface_utils.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/ops/op_math/condition.py",
+   "descricao": "outro (nenhuma): [Capture] Fix cond with no returns and dynamic shapes enabled (#7080)",
+   "linha": 739,
+   "origem": "github:PennyLaneAI/pennylane@72ae2bab7109b71b6eb7d9532327813502529b87:pennylane/ops/op_math/condition.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/templates/state_preparations/sum_of_slaters.py",
+   "descricao": "outro (nenhuma): Fix SumOfSlatersPrep capture with dynamic wires (#10078)",
+   "linha": 1077,
+   "origem": "github:PennyLaneAI/pennylane@865588cc403a027bd3bda3f2e49b7e2fd0ccc1a1:pennylane/templates/state_preparations/sum_of_slaters.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/templates/state_preparations/partial_unary.py",
+   "descricao": "outro (nenhuma): fix: replace `qp.math.scatter` in `PartialUnaryStatePreparation` with gather workaround (#10414)",
+   "linha": 970,
+   "origem": "github:PennyLaneAI/pennylane@86563dd2b3dbec499786a827fb58c25298f522bd:pennylane/templates/state_preparations/partial_unary.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/operation.py",
+   "descricao": "outro (nenhuma): Fix gen_is_multi_term_hamiltonian (#7121)",
+   "linha": 2419,
+   "origem": "github:PennyLaneAI/pennylane@8da728d91b0dee3d9a8f451a7b68b55ee5603e1a:pennylane/operation.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "PennyLaneAI__pennylane/pennylane/backline/decoders/triton/decoder_frontend.py",
+   "descricao": "outro (nenhuma): Fix triton decoder kernel for CUDA with triton 3.8 (#10111)",
+   "linha": 120,
+   "origem": "github:PennyLaneAI/pennylane@bb057e3a2821a480165b2b8bb0bdaf51990f45ea:pennylane/backline/decoders/triton/decoder_frontend.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/packaging/python/templates/rocm/src/rocm_sdk/_devel.py",
+   "descricao": "outro (nenhuma): Fix device-link discovery against stale importlib.metadata cache (#5798)",
+   "linha": 229,
+   "origem": "github:ROCm/TheRock@2b0496c63dfa3dcbb81bd870485e9cf29092d9aa:build_tools/packaging/python/templates/rocm/src/rocm_sdk/_devel.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/github_actions/github_actions_api.py",
+   "descricao": "outro (nenhuma): fix(ci): skip platforms without selected artifacts (#8821)",
+   "linha": 480,
+   "origem": "github:ROCm/TheRock@2fb7b81cf159a2d62ac7ef91960446450db6ed72:build_tools/github_actions/github_actions_api.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/install_rocm_from_artifacts.py",
+   "descricao": "outro (nenhuma): Fix installed hipify-clang runtime library paths (#8516)",
+   "linha": 445,
+   "origem": "github:ROCm/TheRock@358ac1ab1852581461bf7104505e0a7a36dfd564:build_tools/install_rocm_from_artifacts.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/github_actions/publish_rocm_to_release_buckets.py",
+   "descricao": "outro (nenhuma): fix(asan): publish_rocm_to_release_buckets.py` to accept all the asan varients (#7745)",
+   "linha": 85,
+   "origem": "github:ROCm/TheRock@36503ee49f840e134983a7a97272a6fe43d0052a:build_tools/github_actions/publish_rocm_to_release_buckets.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/packaging/python/templates/rocm-sdk-core/setup.py",
+   "descricao": "outro (nenhuma): Add amd-smi console script and fix finding amdsmi shared lib (#1626)",
+   "linha": 72,
+   "origem": "github:ROCm/TheRock@5016a89d1e10880851f6fc97b2f25d52ada1c74e:build_tools/packaging/python/templates/rocm-sdk-core/setup.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/artifact_manager.py",
+   "descricao": "outro (nenhuma): fix(bootstrap): write .prebuilt marker at the subproject stage dir (#7551)",
+   "linha": 71,
+   "origem": "github:ROCm/TheRock@57270eb97d009384bb2e0e22d6bb9f83b33ac76d:build_tools/artifact_manager.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/github_actions/fetch_package_targets.py",
+   "descricao": "outro (nenhuma): [windows] Fix fetch_package_targets without explicit AMDGPU_FAMILIES. (#834)",
+   "linha": 10,
+   "origem": "github:ROCm/TheRock@69e073a6966fb627c2bac4127b6ffe18564df1a0:build_tools/github_actions/fetch_package_targets.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/github_actions/fetch_test_configurations.py",
+   "descricao": "outro (nenhuma): fix(ci): skip miopen-dbsync on ASAN builds (#9501)",
+   "linha": 260,
+   "origem": "github:ROCm/TheRock@96fa9604f75329e92715017b3eba7849af6b3097:build_tools/github_actions/fetch_test_configurations.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/external-builds/pytorch/build_prod_wheels.py",
+   "descricao": "outro (nenhuma): fix(pytorch): Add libamd_smi to the Linux library wheel preload list (#7057)",
+   "linha": 164,
+   "origem": "github:ROCm/TheRock@a10da164f6fe258f4b5d1d443767c3422b394150:external-builds/pytorch/build_prod_wheels.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/github_actions/test_executable_scripts/pytest_runner.py",
+   "descricao": "outro (nenhuma): fix(test): add platform-specific llvm / rocm_sysdeps to LD_LIBRARY_PATH in CI (#7201)",
+   "linha": 219,
+   "origem": "github:ROCm/TheRock@b8b627c57d62e2e608fa56bdb4dc692f1aa6159a:build_tools/github_actions/test_executable_scripts/pytest_runner.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ROCm__TheRock/build_tools/packaging/linux/build_package.py",
+   "descricao": "outro (nenhuma): fix: Make DEB compression configurable with CPU-based auto default (#9644)",
+   "linha": 523,
+   "origem": "github:ROCm/TheRock@bbe1cc4849befc332b15b2dc9dc5ca7132cef4cb:build_tools/packaging/linux/build_package.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/ace/inference/data_writer/file_writer.py",
+   "descricao": "outro (nenhuma): Fix ACE time index slice writer subselection (#2278)",
+   "linha": 507,
+   "origem": "github:ai2cm/ace@2b46f00e9339cafbf20121c04f6750978b18ed93:fme/ace/inference/data_writer/file_writer.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/ace/stepper/derived_forcings.py",
+   "descricao": "outro (nenhuma): Fix/n ensemble attributes batch data (#1085)",
+   "linha": 88,
+   "origem": "github:ai2cm/ace@4ca6589b5189e82b89ea3c500862871a703d0ded:fme/ace/stepper/derived_forcings.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/ace/stepper/single_module.py",
+   "descricao": "outro (nenhuma): fix: use forcing data_mask for ensemble training forward pass and loss (#1262)",
+   "linha": 1676,
+   "origem": "github:ai2cm/ace@4f1eef8954928046f52f000eda0210d5a3332fff:fme/ace/stepper/single_module.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/downscaling/models.py",
+   "descricao": "outro (nenhuma): Fix normalizer rename build (#2129)",
+   "linha": 61,
+   "origem": "github:ai2cm/ace@6f1789f6ee94e5ba64fc9b540b441dd105b047ef:fme/downscaling/models.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/ace/stepper/parameter_init.py",
+   "descricao": "outro (nenhuma): Fix bug in legacy parameter init handling (#1927)",
+   "linha": 126,
+   "origem": "github:ai2cm/ace@7d0efda24d329e9eeda7c6b302d8bac2778fda76:fme/ace/stepper/parameter_init.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/ace/inference/data_writer/zarr.py",
+   "descricao": "outro (nenhuma): Fix SeparateICZarrWriterAdapter mislabeling time calendar as julian (#1325)",
+   "linha": 330,
+   "origem": "github:ai2cm/ace@80febdba161832fb07a9ba2d7932970720d916b7:fme/ace/inference/data_writer/zarr.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/core/histogram.py",
+   "descricao": "outro (nenhuma): Fix histogram ckpt selection and percentile frac_of_target reporting (#1221)",
+   "linha": 600,
+   "origem": "github:ai2cm/ace@8b8507b965b20f902470287a934894672c56cc6c:fme/core/histogram.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/core/dataset/concat.py",
+   "descricao": "outro (nenhuma): Fix XarrayConcat type hint and missing dims attr (#1878)",
+   "linha": 2,
+   "origem": "github:ai2cm/ace@9510d6ecf9cbbb5a1f8d66a94540ce1b2d3832cf:fme/core/dataset/concat.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/ace/data_loading/inference.py",
+   "descricao": "outro (nenhuma): Fix label_override when forcing_loader not given labels (#977)",
+   "linha": 228,
+   "origem": "github:ai2cm/ace@ae6fc199457809161d25d6d541bd872ff5dd5e4a:fme/ace/data_loading/inference.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/fme/core/atmosphere_data.py",
+   "descricao": "outro (nenhuma): Fix frozen-precipitation-related bugs (#1506)",
+   "linha": 16,
+   "origem": "github:ai2cm/ace@b2e6852f49a831452904c31af893dd0f62b36b44:fme/fme/core/atmosphere_data.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/downscaling/modules/unets.py",
+   "descricao": "outro (nenhuma): Fix unet shape validation (#1874)",
+   "linha": 404,
+   "origem": "github:ai2cm/ace@c3f240788b65c27b7318c66e6bbeb6d0dda22768:fme/downscaling/modules/unets.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ai2cm__ace/fme/ace/models/ocean/m2lines/samudra.py",
+   "descricao": "outro (nenhuma): Adding normalization layer configurability to Samudra and minor fixes to regression tests(#1602)",
+   "linha": 2,
+   "origem": "github:ai2cm/ace@f645f30f7d5c41d075651481ad335a438576e2fa:fme/ace/models/ocean/m2lines/samudra.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/airflow-core/src/airflow/models/trigger.py",
+   "descricao": "outro (nenhuma): Fix XComs of task-end trigger events being JSON-encoded twice (#76596)",
+   "linha": 956,
+   "origem": "github:apache/airflow@1c870b3478d63680151b0170f6427be8756a11ce:airflow-core/src/airflow/models/trigger.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/providers/google/src/airflow/providers/google/cloud/triggers/kubernetes_engine.py",
+   "descricao": "outro (nenhuma): Fix GKEStartPodOperator ignoring execution_timeout when deferrable (#71528)",
+   "linha": 160,
+   "origem": "github:apache/airflow@34ffab8e4a4232470cd9d3c06847c6960529f615:providers/google/src/airflow/providers/google/cloud/triggers/kubernetes_engine.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/providers/src/airflow/providers/exasol/hooks/exasol.py",
+   "descricao": "outro (nenhuma): Fix rowcount logging in exasol provider (#44022) (#45760)",
+   "linha": 249,
+   "origem": "github:apache/airflow@3e8449fbcfa97c267b58447d1eb72b17c5fda76b:providers/src/airflow/providers/exasol/hooks/exasol.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/airflow/cli/commands/remote_commands/backfill_command.py",
+   "descricao": "outro (nenhuma): Fix Backfill CLI command with dry run (#46920)",
+   "linha": 24,
+   "origem": "github:apache/airflow@4f0a6670587236032a76aae5d91034b4c4ee8396:airflow/cli/commands/remote_commands/backfill_command.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/airflow-core/src/airflow/utils/email.py",
+   "descricao": "outro (nenhuma): Fixed \"AttributeError: 'NoneType' object has no attribute 'close'\" for SmtpHook (#62409)",
+   "linha": 260,
+   "origem": "github:apache/airflow@50271018585fda6765a638f3c4070d1bd927614f:airflow-core/src/airflow/utils/email.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/providers/common/ai/src/airflow/providers/common/ai/utils/usage_budget.py",
+   "descricao": "outro (divisao_vazia/guarda): Fix Common AI durable retries and tool-approval resumes on pydantic-ai 2.50+ (#74313)",
+   "linha": 108,
+   "origem": "github:apache/airflow@77b21f34c05f7a8b17c43827327c912605d144cd:providers/common/ai/src/airflow/providers/common/ai/utils/usage_budget.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/providers/google/src/airflow/providers/google/cloud/hooks/cloud_composer.py",
+   "descricao": "outro (nenhuma): Fix CloudComposerAsyncHook to work correctly with Airflow 3. (#54976)",
+   "linha": 39,
+   "origem": "github:apache/airflow@866a1f0f6d2dc585dfdc0188e93990cc97e6a327:providers/google/src/airflow/providers/google/cloud/hooks/cloud_composer.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/providers/cncf/kubernetes/src/airflow/providers/cncf/kubernetes/executors/kubernetes_executor.py",
+   "descricao": "outro (nenhuma): Fix scheduler crashloop from KubernetesExecutor completed-pod adoption (#67850)",
+   "linha": 725,
+   "origem": "github:apache/airflow@990372e256afe48eb10befefff7db38957b07a83:providers/cncf/kubernetes/src/airflow/providers/cncf/kubernetes/executors/kubernetes_executor.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/providers/elasticsearch/src/airflow/providers/elasticsearch/log/es_response.py",
+   "descricao": "outro (nenhuma): fix the write-to-es feature for Airflow 3 (#53821)",
+   "linha": 20,
+   "origem": "github:apache/airflow@aeec681817826fe744745197d97f9c32c39118d1:providers/elasticsearch/src/airflow/providers/elasticsearch/log/es_response.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/airflow-core/src/airflow/cli/commands/asset_command.py",
+   "descricao": "outro (nenhuma): Fix CLI asset materialization to use correct dag run type (#63815)",
+   "linha": 34,
+   "origem": "github:apache/airflow@ca401d00cfd33d3ce81c212093d9f999ab9d1a57:airflow-core/src/airflow/cli/commands/asset_command.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/airflow-core/src/airflow/serialization/definitions/notset.py",
+   "descricao": "outro (nenhuma): Fix ArgNotSet repr to use stable string instead of memory address (#65222)",
+   "linha": 34,
+   "origem": "github:apache/airflow@e0587fdc18baf28722b167b71eaf85068181a462:airflow-core/src/airflow/serialization/definitions/notset.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/airflow-core/src/airflow/api_fastapi/core_api/datamodels/ui/grid.py",
+   "descricao": "outro (nenhuma): Fix None child state rendering in UI (#67552)",
+   "linha": 21,
+   "origem": "github:apache/airflow@f822744a0a1030d23f8889044b1a3e2ed5f54e88:airflow-core/src/airflow/api_fastapi/core_api/datamodels/ui/grid.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "apache__airflow/shared/observability/src/airflow_shared/observability/common.py",
+   "descricao": "outro (nenhuma): fix(metrics/otel): bracket IPv6 host literals in exporter endpoint URL (#66813)",
+   "linha": 31,
+   "origem": "github:apache/airflow@f8baa0a8a05713efd7bbb886563a7a1b50174d1c:shared/observability/src/airflow_shared/observability/common.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/cli/specific/dataset_cli.py",
+   "descricao": "outro (nenhuma): fix(CLI): add complex types to schemas in dataset upload (#15937)",
+   "linha": 212,
+   "origem": "github:datahub-project/datahub@110596c64930ac242d184bc67c0190cbc7ffac58:metadata-ingestion/src/datahub/cli/specific/dataset_cli.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/configuration/env_vars.py",
+   "descricao": "outro (nenhuma): fix: CI environment detection (#16119)",
+   "linha": 369,
+   "origem": "github:datahub-project/datahub@2ebf023cbec70bf797aec1d19e579cad92aa3eff:metadata-ingestion/src/datahub/configuration/env_vars.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/ingestion/source/datahub/datahub_source.py",
+   "descricao": "outro (nenhuma): fix(ingest/datahub): Create Structured property templates in advance and batch processing (#13355)",
+   "linha": 120,
+   "origem": "github:datahub-project/datahub@2ffa84be5cf8ccd42014ea96d44b25fbddc70086:metadata-ingestion/src/datahub/ingestion/source/datahub/datahub_source.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/ingestion/source/dbt/dbt_core.py",
+   "descricao": "outro (nenhuma): fix(ingest/dbt): read semantic model meta from config.meta instead of top-level (#19782)",
+   "linha": 554,
+   "origem": "github:datahub-project/datahub@6bb7a2237fae1554158c58ddb78222457efdb59c:metadata-ingestion/src/datahub/ingestion/source/dbt/dbt_core.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/ingestion/source/sql/sqlalchemy_data_reader.py",
+   "descricao": "outro (nenhuma): fix(ingestion/oracle): fix profiling crashes and silent table exclusions (#16396)",
+   "linha": 57,
+   "origem": "github:datahub-project/datahub@a1b5edb827be257c329d1606e6231155dd5ce609:metadata-ingestion/src/datahub/ingestion/source/sql/sqlalchemy_data_reader.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/utilities/pkg_resources_shim.py",
+   "descricao": "outro (nenhuma): fix(ingest): add iter_entry_points to the pkg_resources shim (#19896)",
+   "linha": 20,
+   "origem": "github:datahub-project/datahub@ba4e5f82d6af87db651ae56aca8e99fe5a5d6945:metadata-ingestion/src/datahub/utilities/pkg_resources_shim.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/ingestion/source/schema_inference/json.py",
+   "descricao": "outro (nenhuma): fix(ingestion): stream JSON schema inference to prevent OOM on large files (#16991)",
+   "linha": 5,
+   "origem": "github:datahub-project/datahub@c90e955a05de5a1c3a59ac0e7ff0296105f392ec:metadata-ingestion/src/datahub/ingestion/source/schema_inference/json.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/ingestion/source/fabric/onelake/schema_client.py",
+   "descricao": "outro (nenhuma): fix(ingest/fabric-onelake): use provisioningStatus instead of hostname pattern for SQL endpoint validation (#18368)",
+   "linha": 189,
+   "origem": "github:datahub-project/datahub@ccec07c82c7664fa0cedc45a7bb02eab3dc6762e:metadata-ingestion/src/datahub/ingestion/source/fabric/onelake/schema_client.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/datahub-actions/src/datahub_actions/plugin/source/acryl/datahub_cloud_events_consumer.py",
+   "descricao": "outro (nenhuma): fix(actions): handle additional transient exception types to improve actions robustness (#15378)",
+   "linha": 7,
+   "origem": "github:datahub-project/datahub@d4c56f76dea73dcbc290f87a25a14da9899a6ff9:datahub-actions/src/datahub_actions/plugin/source/acryl/datahub_cloud_events_consumer.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/airflow3/_athena_openlineage_patch.py",
+   "descricao": "outro (nenhuma): fix(ingest/airflow): use the Athena operator database as the default schema (#20469)",
+   "linha": 81,
+   "origem": "github:datahub-project/datahub@e1c5d684340fa253f8f81368e406a9348ebea21c:metadata-ingestion-modules/airflow-plugin/src/datahub_airflow_plugin/airflow3/_athena_openlineage_patch.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/ingestion/source/looker/looker_common.py",
+   "descricao": "outro (nenhuma): fix(looker): honor tag_measures_and_dimensions config in schema building (#16317)",
+   "linha": 723,
+   "origem": "github:datahub-project/datahub@f48677e34fac09e600e43ed18ff7e73c5ffe239a:metadata-ingestion/src/datahub/ingestion/source/looker/looker_common.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "datahub-project__datahub/metadata-ingestion/src/datahub/sdk/main_client.py",
+   "descricao": "outro (nenhuma): fix(sdk): use pluralized assertions (#13481)",
+   "linha": 15,
+   "origem": "github:datahub-project/datahub@f71ff7722af6a4899ac92757e36a9e1f0b0d9be5:metadata-ingestion/src/datahub/sdk/main_client.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/frappe/studio/doctype/studio_page/patches/migrate_charts_to_frappe_ui_charts.py",
+   "descricao": "outro (nenhuma): fix(patch): preserve dynamic bindings",
+   "linha": 53,
+   "origem": "github:frappe/frappe@0ef91e1938af658738b12c3aa3914ecf521ec6f0:frappe/studio/doctype/studio_page/patches/migrate_charts_to_frappe_ui_charts.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/frappe/twofactor.py",
+   "descricao": "outro (nenhuma): fix(twofactor): remove the hardcoded condn.",
+   "linha": 114,
+   "origem": "github:frappe/frappe@11caacaf06816b6393bdd1f71d5a9776f4a2d027:frappe/twofactor.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/flow/harness/src/flow_server/session/store.py",
+   "descricao": "outro (nenhuma): fix(sessions): pair tool results correctly in the replayed transcript",
+   "linha": 387,
+   "origem": "github:frappe/frappe@407ef6e40b5a4fa9eb3a1a752d96f520c29f5acc:flow/harness/src/flow_server/session/store.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/flow/harness/src/flow_server/agent/loop.py",
+   "descricao": "outro (nenhuma): fix(sessions): report resume and abort outcomes on the durable log",
+   "linha": 85,
+   "origem": "github:frappe/frappe@5f27e5bf75b96d82dfb3b7527d6078665e69ed68:flow/harness/src/flow_server/agent/loop.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/frappe/core/doctype/data_import/import_provider.py",
+   "descricao": "outro (nenhuma): fix(data-import): export import provider tables with records (#44074)",
+   "linha": 33,
+   "origem": "github:frappe/frappe@615ee3bfab11f61d61d8b38fb9e6380172612a58:frappe/core/doctype/data_import/import_provider.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/frappe/core/doctype/data_import/exporter.py",
+   "descricao": "outro (nenhuma): fix: apply export field access",
+   "linha": 6,
+   "origem": "github:frappe/frappe@84f0232705aa7f76ef3a02b1c0cc62bb921e806e:frappe/core/doctype/data_import/exporter.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/flow/harness/src/flow_harness/session/config.py",
+   "descricao": "outro (nenhuma): fix(harness): a run's token budget counts input, not only output",
+   "linha": 62,
+   "origem": "github:frappe/frappe@a012aaff00ff8b8ace631ad123f62e9408f045da:flow/harness/src/flow_harness/session/config.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/frappe/printing/doctype/print_format/classic_converter.py",
+   "descricao": "outro (nenhuma): fix: honor section print_hide in default and converted print layouts",
+   "linha": 65,
+   "origem": "github:frappe/frappe@cd9034530b6315786343bdbf4330ae075f7c2d76:frappe/printing/doctype/print_format/classic_converter.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/frappe/flow/assistant/assistant.py",
+   "descricao": "outro (nenhuma): fix(tools): name read_records in the Assistant and harden the rename patch",
+   "linha": 20,
+   "origem": "github:frappe/frappe@d1b29db4efcd5bd260ef14b10451a3fe7a5cc5b6:frappe/flow/assistant/assistant.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/flow/harness/src/flow/agent/loop.py",
+   "descricao": "outro (nenhuma): fix(agent): announce resumed runs with run_started",
+   "linha": 166,
+   "origem": "github:frappe/frappe@d4a51d588e11a2819178bffdab0d170bf32d3ebf:flow/harness/src/flow/agent/loop.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/frappe/core/doctype/file/file_v2.py",
+   "descricao": "outro (nenhuma): fix(storage): run file adoption hooks for v2 uploads",
+   "linha": 268,
+   "origem": "github:frappe/frappe@d7948050b321a7f28b546a461554e9b2d14a0a33:frappe/core/doctype/file/file_v2.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "frappe__frappe/frappe/core/doctype/error_log/error_log.py",
+   "descricao": "outro (nenhuma): fix(UX): Show deferred error insert (#40733)",
+   "linha": 59,
+   "origem": "github:frappe/frappe@ed6e5700e50670e06aa0084778b92fe14f5ebec8:frappe/core/doctype/error_log/error_log.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/serializer.py",
+   "descricao": "outro (nenhuma): fix(serializer): Don't call `__iter__` on arbitrary sequences (#6304)",
+   "linha": 3,
+   "origem": "github:getsentry/sentry-python@0af4a8b4944a84624777072a6d39ce4ca3e46c71:sentry_sdk/serializer.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/openai.py",
+   "descricao": "outro (nenhuma): fix(integrations): improve embeddings support for openai (#5121)",
+   "linha": 198,
+   "origem": "github:getsentry/sentry-python@145773bd2ce698e174fa75a3607f7390dfb958d7:sentry_sdk/integrations/openai.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/aiohttp.py",
+   "descricao": "outro (nenhuma): fix: Make sure `http.server` spans are segments (#6230)",
+   "linha": 187,
+   "origem": "github:getsentry/sentry-python@16902363a76e1c69436a47ab02bd4133b184578a:sentry_sdk/integrations/aiohttp.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/pydantic_ai/patches/agent_run.py",
+   "descricao": "outro (nenhuma): fix(pydantic-ai): Use first-class hooks when available (#5947)",
+   "linha": 99,
+   "origem": "github:getsentry/sentry-python@59e97e727e5dbbd1a159c878e6317b7458ff1659:sentry_sdk/integrations/pydantic_ai/patches/agent_run.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/profiler/continuous_profiler.py",
+   "descricao": "outro (divisao_vazia/guarda): fix(profiling): Re-init continuous profiler (#4772)",
+   "linha": 223,
+   "origem": "github:getsentry/sentry-python@6463f73e48abd3fc30d26ff07ae60fb65dc38a2a:sentry_sdk/profiler/continuous_profiler.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/gcp.py",
+   "descricao": "outro (nenhuma): fix(gcp): Gate request body collection on data_collection experiment (#7254)",
+   "linha": 249,
+   "origem": "github:getsentry/sentry-python@728a7e30a0cbef858e6a2c92362b06aadc09b861:sentry_sdk/integrations/gcp.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/pydantic_ai/__init__.py",
+   "descricao": "outro (nenhuma): fix(pydantic-ai): Stop capturing internal exceptions (#5237)",
+   "linha": 22,
+   "origem": "github:getsentry/sentry-python@a9d89f2ddd234237237691b7388cd48f1a3a0f8e:sentry_sdk/integrations/pydantic_ai/__init__.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/logger.py",
+   "descricao": "outro (nenhuma): fix(logs): Do not attach template if there are no parameters (#4728)",
+   "linha": 25,
+   "origem": "github:getsentry/sentry-python@bf4d921a5d779076e693545652359b4c0668f384:sentry_sdk/logger.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/arq.py",
+   "descricao": "outro (nenhuma): fix(arq): handle settings_cls passed as keyword argument (#5393)",
+   "linha": 188,
+   "origem": "github:getsentry/sentry-python@e061eb1b9a4ef1be698e0f17bd064d40baa8bfeb:sentry_sdk/integrations/arq.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/google_genai/utils.py",
+   "descricao": "outro (nenhuma): fix(ai): truncate messages for google genai (#4992)",
+   "linha": 18,
+   "origem": "github:getsentry/sentry-python@ee3629cec4b0219b615e94f02b93428d2273d8d3:sentry_sdk/integrations/google_genai/utils.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/openai_agents/patches/runner.py",
+   "descricao": "outro (nenhuma): fix(openai-agents): Isolate agent run (#4720)",
+   "linha": 26,
+   "origem": "github:getsentry/sentry-python@eee4c4b0186c8aed964151a8e2af56420b7ad288:sentry_sdk/integrations/openai_agents/patches/runner.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "getsentry__sentry-python/sentry_sdk/integrations/_asgi_common.py",
+   "descricao": "outro (nenhuma): fix(asgi): Gate query string and client IP behind send_default_pii (#6501)",
+   "linha": 124,
+   "origem": "github:getsentry/sentry-python@f17dad95f33f59aa65bf023a4435e059c4145d37:sentry_sdk/integrations/_asgi_common.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/webostv/__init__.py",
+   "descricao": "outro (nenhuma): Fix LG webOS TV init test coverage (#135194)",
+   "linha": 132,
+   "origem": "github:home-assistant/core@07482de4abd7bf14b6433e9ea8ab8702e5cfa735:homeassistant/components/webostv/__init__.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/roomba/vacuum.py",
+   "descricao": "outro (nenhuma): Fix roomba charging state and add charging binary sensor (#173304)",
+   "linha": 133,
+   "origem": "github:home-assistant/core@19880b421497617d7bb20129999d058b54e2dad7:homeassistant/components/roomba/vacuum.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/myuplink/select.py",
+   "descricao": "outro (nenhuma): Fix myUplink select platform failing on decimal enum values (#182602)",
+   "linha": 69,
+   "origem": "github:home-assistant/core@1c1dcfd95036434777c36668d56a2ae04966d1bf:homeassistant/components/myuplink/select.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/yale_smart_alarm/__init__.py",
+   "descricao": "outro (nenhuma): Fix Yale Smart Living panic button unique_id for multiple hubs (#173547)",
+   "linha": 34,
+   "origem": "github:home-assistant/core@4c1dbec599497ed12b067e385b13c17e8abcc4ff:homeassistant/components/yale_smart_alarm/__init__.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/prosegur/camera.py",
+   "descricao": "outro (nenhuma): Fix swallowed exceptions in prosegur action handlers (#183247)",
+   "linha": 12,
+   "origem": "github:home-assistant/core@568a2544cd105aabfe6cfcb658563ec010c4d2aa:homeassistant/components/prosegur/camera.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/lyric/sensor.py",
+   "descricao": "outro (nenhuma): Fix Lyric sensor crash when next_period_time is None (#167831)",
+   "linha": 145,
+   "origem": "github:home-assistant/core@5e8f0d1078337e2dec93546573928255b0ea9f56:homeassistant/components/lyric/sensor.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/tado/config_flow.py",
+   "descricao": "outro (nenhuma): Fix Tado config flow (#135353)",
+   "linha": 52,
+   "origem": "github:home-assistant/core@74c3e9629f6153563de8a3fd4a27f0e20fe3499c:homeassistant/components/tado/config_flow.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/alexa_devices/coordinator.py",
+   "descricao": "outro (nenhuma): Fix stale devices removal for Alexa devices (#167837)",
+   "linha": 57,
+   "origem": "github:home-assistant/core@853b6a80d2133a4ff3d5da014fd08abbf8f0e3f3:homeassistant/components/alexa_devices/coordinator.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/sonos/entity.py",
+   "descricao": "outro (nenhuma): Fix Sonos polling error logging (#188203)",
+   "linha": 132,
+   "origem": "github:home-assistant/core@954679dc887b85bb732305792ad92e287089b0c5:homeassistant/components/sonos/entity.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/matter/cover.py",
+   "descricao": "outro (nenhuma): Fix Matter cover device class for shutters and unknown types (#191820)",
+   "linha": 48,
+   "origem": "github:home-assistant/core@a131b2964706992573970ff403c7cb827d4289fb:homeassistant/components/matter/cover.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/blebox/light.py",
+   "descricao": "outro (nenhuma): Fix ValueError when turning on blebox light with brightness set to 0 (#170769)",
+   "linha": 204,
+   "origem": "github:home-assistant/core@b633fbcf0751829d9c654e6cb30377d094e4e989:homeassistant/components/blebox/light.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/esphome/entity.py",
+   "descricao": "outro (nenhuma): Fix ESPHome entities unavailable if deep sleep enabled after entry setup (#144970)",
+   "linha": 242,
+   "origem": "github:home-assistant/core@cc62943835d2638e461ca5dc4f31089aa87d4126:homeassistant/components/esphome/entity.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "home-assistant__core/homeassistant/components/isy994/helpers.py",
+   "descricao": "outro (nenhuma): Fix via_device race in isy994 (#177722)",
+   "linha": 291,
+   "origem": "github:home-assistant/core@eccb5cac1ddf246ceb19edcf359febc18c8a4760:homeassistant/components/isy994/helpers.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/mamba2/modeling_mamba2.py",
+   "descricao": "outro (nenhuma): Fix Mamba2ForCausalLM weight tying (#43207)",
+   "linha": 933,
+   "origem": "github:huggingface/transformers@10e97cd508218546ef681a2c9b4c519ac0d927c3:src/transformers/models/mamba2/modeling_mamba2.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/dac/modeling_dac.py",
+   "descricao": "outro (nenhuma): [fix] DAC model: Apply STE in Dac.from_latents to match the forward pass (#43820)",
+   "linha": 393,
+   "origem": "github:huggingface/transformers@3d24ffaa4f0927cc8b5da10157ac009d34942472:src/transformers/models/dac/modeling_dac.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/qwen2_vl/image_processing_qwen2_vl.py",
+   "descricao": "outro (nenhuma): [qwen-vl] fix image processor (#37258)",
+   "linha": 382,
+   "origem": "github:huggingface/transformers@41b9b92b52215bed472c9a534a06abbc3a9a95cd:src/transformers/models/qwen2_vl/image_processing_qwen2_vl.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/tipsv2/modeling_tipsv2.py",
+   "descricao": "outro (nenhuma): Fix model tests for tipsv2 (#47356)",
+   "linha": 446,
+   "origem": "github:huggingface/transformers@7120f6333933f1578e11fe69d85025017db9c9c7:src/transformers/models/tipsv2/modeling_tipsv2.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/emu3/modular_emu3.py",
+   "descricao": "outro (nenhuma): Fix CI for VLMs (#35690)",
+   "linha": 57,
+   "origem": "github:huggingface/transformers@8571bb145a243b9cc1d4ce0ddcc0d816b5ac801c:src/transformers/models/emu3/modular_emu3.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/commands/serving.py",
+   "descricao": "outro (nenhuma): Fix responses add tests (#39848)",
+   "linha": 399,
+   "origem": "github:huggingface/transformers@88ead3f51806405f88b12fbad46e935e5ae13873:src/transformers/commands/serving.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/blt/modeling_blt.py",
+   "descricao": "outro (nenhuma): fix failed test cases for blt model (#45596)",
+   "linha": 673,
+   "origem": "github:huggingface/transformers@9120f5e4858183b0b3fccf091869c026c530b898:src/transformers/models/blt/modeling_blt.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/ernie4_5_moe/modular_ernie4_5_moe.py",
+   "descricao": "outro (nenhuma): fix moe routing_weights (#39581)",
+   "linha": 153,
+   "origem": "github:huggingface/transformers@a62f65a989b10bf1130e098bb62f16a5b3994ee8:src/transformers/models/ernie4_5_moe/modular_ernie4_5_moe.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/reformer/modeling_reformer.py",
+   "descricao": "outro (nenhuma): Fix Reformer LM head bias not applied since the weight-loading refactor (#50811)",
+   "linha": 1829,
+   "origem": "github:huggingface/transformers@b7fe69cb1967be50662c0386f148afc46aa2a2ee:src/transformers/models/reformer/modeling_reformer.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/mistral/configuration_mistral.py",
+   "descricao": "outro (nenhuma): Fix generate outputs and simplify cache tests (#41440)",
+   "linha": 146,
+   "origem": "github:huggingface/transformers@bfe2b623ef9bd301e57463258ffcc5e6fb19e2ac:src/transformers/models/mistral/configuration_mistral.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/generation/streamers.py",
+   "descricao": "outro (nenhuma): Fix long lagging when streaming text without spaces and NJK chars (#36708)",
+   "linha": 19,
+   "origem": "github:huggingface/transformers@c1dac37bf105bc281818cbc37c0032ffc5495506:src/transformers/generation/streamers.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/src/transformers/models/inkling/feature_extraction_inkling.py",
+   "descricao": "outro (nenhuma): [fix] inkling: mps + cuda mel spec extraction (#47432)",
+   "linha": 112,
+   "origem": "github:huggingface/transformers@dce39210a56428d5cf5d6a03bbeb12f45c3918d0:src/transformers/models/inkling/feature_extraction_inkling.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "huggingface__transformers/utils/fetch_hub_objects_for_ci.py",
+   "descricao": "outro (nenhuma): Fix `too many requests` in `TestMistralCommonTokenizer` (#40623)",
+   "linha": 7,
+   "origem": "github:huggingface/transformers@e690fe61e82e1b83c4b30a86559cf9c9d1bb0356:utils/fetch_hub_objects_for_ci.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/computed_attribute/models.py",
+   "descricao": "outro (nenhuma): fix: filter computed attribute triggers on display_label and hfid (#10162)",
+   "linha": 244,
+   "origem": "github:opsmill/infrahub@004b1470df6e246b8d3d95acc5836fa6971cfbda:backend/infrahub/computed_attribute/models.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/core/branch/tasks.py",
+   "descricao": "outro (nenhuma): fix: stop intermittent CI failures and a false branch deletion error (#11547)",
+   "linha": 589,
+   "origem": "github:opsmill/infrahub@371e8dfd2ff1a1672e7c604b7630ef678bc86631:backend/infrahub/core/branch/tasks.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/config.py",
+   "descricao": "outro (nenhuma): fix: write the batches of a diff save concurrently",
+   "linha": 401,
+   "origem": "github:opsmill/infrahub@3af45f319e741d51e693d62caf306771d5bc56d6:backend/infrahub/config.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/trace.py",
+   "descricao": "outro (nenhuma): fix: resolve dependency alerts and schedule grouped updates (#11274)",
+   "linha": 61,
+   "origem": "github:opsmill/infrahub@67cc5407e9abe9783b926508ab7526a4adfe5e4e:backend/infrahub/trace.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/core/migrations/schema/node_remove.py",
+   "descricao": "outro (nenhuma): Fix node kind migration with agnostic/aware schema",
+   "linha": 26,
+   "origem": "github:opsmill/infrahub@6ff8590bafec97b1ede9a29445428d1a0a716d78:backend/infrahub/core/migrations/schema/node_remove.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/core/diff/calculator.py",
+   "descricao": "outro (nenhuma): fix(diff): let a diff calculation cover chosen node kinds only",
+   "linha": 38,
+   "origem": "github:opsmill/infrahub@8304b551e554d9d5617d98f90edf3f18913cb43f:backend/infrahub/core/diff/calculator.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/core/convert_object_type/object_conversion.py",
+   "descricao": "outro (nenhuma): fix(branch): do not reopen merged branches when converting agnostic nodes",
+   "linha": 95,
+   "origem": "github:opsmill/infrahub@9ab7bfb0f599da9396fcb85ee8e982e599962e61:backend/infrahub/core/convert_object_type/object_conversion.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/graphql/mutations/ipam.py",
+   "descricao": "outro (nenhuma): fix(ipam): keep IP address uniqueness locks until the create transaction commits (#11063)",
+   "linha": 160,
+   "origem": "github:opsmill/infrahub@a939c91aea76e51788e02d83e67b71bd7bdef411:backend/infrahub/graphql/mutations/ipam.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/core/node/ipam.py",
+   "descricao": "outro (nenhuma): fix(ipam): load is_pool at the time of the query",
+   "linha": 59,
+   "origem": "github:opsmill/infrahub@aa53dcb341ad1df785253f12f468a494a559ccb5:backend/infrahub/core/node/ipam.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/api/admission/middleware.py",
+   "descricao": "outro (nenhuma): fix(api): stop shedding the page load that carries the web UI",
+   "linha": 30,
+   "origem": "github:opsmill/infrahub@bfeae33a0106b935f464cf1d3000c2253e08f957:backend/infrahub/api/admission/middleware.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/graphql/mutations/repository.py",
+   "descricao": "outro (nenhuma): fix: guard Import latest commit for read-only repositories only (#8744)",
+   "linha": 15,
+   "origem": "github:opsmill/infrahub@dd143481136a484e99c8cf06fea650cb11e670d2:backend/infrahub/graphql/mutations/repository.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "opsmill__infrahub/backend/infrahub/graphql/resolvers/resolver.py",
+   "descricao": "outro (nenhuma): fix: validate negative offset and limit in graphql resolver (#9203)",
+   "linha": 6,
+   "origem": "github:opsmill/infrahub@f44cfc2f0b3d3466aff9ba75e9bcbbb93d481102:backend/infrahub/graphql/resolvers/resolver.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/pydantic_ai_slim/pydantic_ai/result.py",
+   "descricao": "outro (nenhuma): Fix AgentStream.stream_output and StreamedRunResult.stream_structured with output tools (#2314)",
+   "linha": 70,
+   "origem": "github:pydantic/pydantic-ai@168680aed867e593d653d9c694b9015a37b3cc0d:pydantic_ai_slim/pydantic_ai/result.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/.github/scripts/semantic_owner_router.py",
+   "descricao": "outro (nenhuma): Fix real-time maintainer routing for opened issues (#7813)",
+   "linha": 430,
+   "origem": "github:pydantic/pydantic-ai@194fb2ad5521b97a415709649a3618a27caa03fc:.github/scripts/semantic_owner_router.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/pydantic_ai_slim/pydantic_ai/models/test.py",
+   "descricao": "outro (nenhuma): fix(test): set `provider_name` on `TestModel` non-streaming responses (#6066)",
+   "linha": 129,
+   "origem": "github:pydantic/pydantic-ai@343258882850bbda10bb825aa48aa65e173cc138:pydantic_ai_slim/pydantic_ai/models/test.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/src/pydantic_clai2/pydantic_clai2/cli/self_update.py",
+   "descricao": "outro (nenhuma): Stop `clai2` from crashing with `ImportError` when it restarts after `/update` (#11172)",
+   "linha": 330,
+   "origem": "github:pydantic/pydantic-ai@5a09a0c8e943d6517a266292ef8bd8ee2253a404:src/pydantic_clai2/pydantic_clai2/cli/self_update.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/pydantic_ai_slim/pydantic_ai/ui/_adapter.py",
+   "descricao": "outro (nenhuma): fix: Relax UserError into a warning when state deps is not provided with AG-UI (#3510)",
+   "linha": 3,
+   "origem": "github:pydantic/pydantic-ai@5f4e078cfaee6651eae37ac9eb726defb5d321f4:pydantic_ai_slim/pydantic_ai/ui/_adapter.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/src/pydantic_ai_harness/pydantic_ai_harness/dynamic_workflow/_capability.py",
+   "descricao": "outro (nenhuma): Fix `DynamicWorkflow` revealed type names, nested tool exposure, and empty `WorkflowAgent` descriptions (#10747)",
+   "linha": 18,
+   "origem": "github:pydantic/pydantic-ai@b28e21696ad8e8ccc41b429e530e6050b5b9ac46:src/pydantic_ai_harness/pydantic_ai_harness/dynamic_workflow/_capability.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/src/pydantic_clai2/pydantic_clai2/prompt_transcript.py",
+   "descricao": "outro (nenhuma): fix: keep theme controls and confirmations out of transcript (pydantic/pydantic-ai-harness#997)",
+   "linha": 4,
+   "origem": "github:pydantic/pydantic-ai@c6ce434f72b7e0ca90252a642b3815e82041b1a1:src/pydantic_clai2/pydantic_clai2/prompt_transcript.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/pydantic_ai_slim/pydantic_ai/_run_context.py",
+   "descricao": "outro (nenhuma): Fix typevar variance for agent deps (#3319)",
+   "linha": 19,
+   "origem": "github:pydantic/pydantic-ai@d16f6345d8e2bcd44cc79639535e3e96d628d53a:pydantic_ai_slim/pydantic_ai/_run_context.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/src/pydantic_ai_harness/pydantic_ai_harness/experimental/overflow/_capability.py",
+   "descricao": "outro (nenhuma): fix(overflow): `read_tool_result` returns on a missing handle instead of raising (pydantic/pydantic-ai-harness#293)",
+   "linha": 532,
+   "origem": "github:pydantic/pydantic-ai@d555b71f9d063fbece890e4fab6cee07f2e9e6aa:src/pydantic_ai_harness/pydantic_ai_harness/experimental/overflow/_capability.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/src/pydantic_clai2/pydantic_clai2/runtime/tasks.py",
+   "descricao": "outro (nenhuma): Drain many delegated children on `DelegationTasks` close without crashing on a cleanup timeout (#12972)",
+   "linha": 229,
+   "origem": "github:pydantic/pydantic-ai@da44268d66675be5282e67b268087065ad8f3836:src/pydantic_clai2/pydantic_clai2/runtime/tasks.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/pydantic_ai_slim/pydantic_ai/ui/vercel_ai/request_types.py",
+   "descricao": "outro (nenhuma): fix(vercel-ai): allow regenerate requests without `messageId` (#5156)",
+   "linha": 390,
+   "origem": "github:pydantic/pydantic-ai@dc1efd2a5ef1546d689452ef0acbf844bf8fe63b:pydantic_ai_slim/pydantic_ai/ui/vercel_ai/request_types.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pydantic__pydantic-ai/pydantic_ai_slim/pydantic_ai/models/gemini.py",
+   "descricao": "outro (nenhuma): Fix JSON streaming unicode issues with gemini (#917)",
+   "linha": 257,
+   "origem": "github:pydantic/pydantic-ai@df3272bf2d1419e13c0e97afa20c9c49f0fd9a7f:pydantic_ai_slim/pydantic_ai/models/gemini.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/experiments/simple_fsdp/llama3/parallelize.py",
+   "descricao": "outro (nenhuma): fix varlen op saving for simple fsdp (#2396)",
+   "linha": 36,
+   "origem": "github:pytorch/torchtitan@238fa9953e4aec2a62582121564273d7cbb1e9f1:torchtitan/experiments/simple_fsdp/llama3/parallelize.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/experiments/torchft/checkpoint.py",
+   "descricao": "outro (nenhuma): Fix TorchFTCheckpointManager's contract with BaseCheckpointManager (#4183)",
+   "linha": 18,
+   "origem": "github:pytorch/torchtitan@296624f1c60683190143b44f74af9eb1b2ce60ea:torchtitan/experiments/torchft/checkpoint.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/experiments/rl/models/vllm_wrapper.py",
+   "descricao": "outro (nenhuma): Fix fused MoE layouts in RL weight sync (#4583)",
+   "linha": 591,
+   "origem": "github:pytorch/torchtitan@2d04249c028132c951b2c9a8d62f465a9b7cc1dd:torchtitan/experiments/rl/models/vllm_wrapper.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/experiments/graph_trainer/simple_fsdp.py",
+   "descricao": "outro (nenhuma): [CI Fix][GraphTrainer] Avoid materializing parameters during FSDP inspection (#5560)",
+   "linha": 536,
+   "origem": "github:pytorch/torchtitan@3b1714ab03e15d1dfe9fa824ec4b5739e45a40c0:torchtitan/experiments/graph_trainer/simple_fsdp.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/models/common/rope.py",
+   "descricao": "outro (nenhuma): Fix YaRN zero correction boundary to pass Helion RoPE tests  (#4215)",
+   "linha": 59,
+   "origem": "github:pytorch/torchtitan@48cb7ae1ff62b91a4743e656fedae505db03e096:torchtitan/models/common/rope.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/config/configs.py",
+   "descricao": "outro (nenhuma): support gpt-oss PP; fix qwen3 MoE expert bias udpate; some other cleanups (#3666)",
+   "linha": 245,
+   "origem": "github:pytorch/torchtitan@8e5554449af1b3767228094bdff82865e3449c0a:torchtitan/config/configs.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/models/common/moe/token_dispatcher.py",
+   "descricao": "outro (nenhuma): Fix HybridEP activation remat and document EP backend selection (#5770)",
+   "linha": 943,
+   "origem": "github:pytorch/torchtitan@a87db08ea73cbdd567ceb055bd9118fd4a4507b2:torchtitan/models/common/moe/token_dispatcher.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/distributed/fsdp.py",
+   "descricao": "outro (nenhuma): [Fix] RoutedExperts output_postprocess parameter under FSDP (#4954)",
+   "linha": 264,
+   "origem": "github:pytorch/torchtitan@b2277c86f1d617eefd081cc467f8edbf1b3b8fac:torchtitan/distributed/fsdp.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/distributed/flex_shard/dist_muon.py",
+   "descricao": "outro (nenhuma): [DistMuon] fix coverage for FeedForward w13 (S1-to-S0) and w2 (Owned) (#4811)",
+   "linha": 74,
+   "origem": "github:pytorch/torchtitan@c104b294752344bd9500a6862b8302616d1f8bcb:torchtitan/distributed/flex_shard/dist_muon.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/experiments/torchft/optimizer.py",
+   "descricao": "outro (nenhuma): Fix restored optimizer learning rates in TorchFT (#4598)",
+   "linha": 14,
+   "origem": "github:pytorch/torchtitan@d771abb062600127b9dd1630a15e5a9dd2259bc5:torchtitan/experiments/torchft/optimizer.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/components/optim/ema.py",
+   "descricao": "outro (nenhuma): fix: preserve global metadata for offloaded ema checkpoints (#5357)",
+   "linha": 441,
+   "origem": "github:pytorch/torchtitan@dc9ea005e411dd9d264fb4b04feb75318948e38d:torchtitan/components/optim/ema.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/config_manager.py",
+   "descricao": "outro (nenhuma): Fix MergedJobConfig class to enable printing arguments during training (#1158)",
+   "linha": 694,
+   "origem": "github:pytorch/torchtitan@e4ae55b381e560913b3e1d8b9403f226e7bf2629:torchtitan/config_manager.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "pytorch__torchtitan/torchtitan/experiments/torchft/manager.py",
+   "descricao": "outro (nenhuma): Fix TorchFT hooks for multi-group FSDP modules (#4664)",
+   "linha": 154,
+   "origem": "github:pytorch/torchtitan@f5c97dc0e2d6cca72313004aa853a196ca02ab49:torchtitan/experiments/torchft/manager.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/data/_internal/util.py",
+   "descricao": "outro (nenhuma): [Data] Fix driver hang during streaming generator block metadata retrieval (#56451)",
+   "linha": 12,
+   "origem": "github:ray-project/ray@15b82aec035f5f20b645d9821e52d18d1199fd38:python/ray/data/_internal/util.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/llm/_internal/batch/processor/base.py",
+   "descricao": "outro (nenhuma): [data.llm] Fix test_batch_vllm leaking resources by using larger wait_for_min_actors_s (#53153)",
+   "linha": 7,
+   "origem": "github:ray-project/ray@7089a6ab602c8a3e4eff0df2c2cb2e7f44151beb:python/ray/llm/_internal/batch/processor/base.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/_private/runtime_env/working_dir.py",
+   "descricao": "outro (nenhuma): [Runtime Env] Fix `ray job submit --working-dir` for local zip files and http:// URLs (#62843)",
+   "linha": 38,
+   "origem": "github:ray-project/ray@80ec8509f128541e20caf38f0ec2660f21a4547e:python/ray/_private/runtime_env/working_dir.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/rllib/env/single_agent_env_runner.py",
+   "descricao": "outro (nenhuma): [RLlib] Fix EnvRunner crash loops (#62884)",
+   "linha": 31,
+   "origem": "github:ray-project/ray@88a939b6d00671e90b6b85f5e68dcb110e248218:rllib/env/single_agent_env_runner.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/serve/_private/replica.py",
+   "descricao": "outro (nenhuma): [serve] Fix route=None crash in direct-ingress metrics reporting (#64645)",
+   "linha": 2867,
+   "origem": "github:ray-project/ray@89512417cd3d4922a6a4d1d86f2c88b8bc9b39c7:python/ray/serve/_private/replica.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/data/_internal/execution/operators/map_operator.py",
+   "descricao": "outro (nenhuma): [Data] Fix split_blocks produce empty blocks  (#57085)",
+   "linha": 817,
+   "origem": "github:ray-project/ray@9218257b6f85df2259e02e303eba10fe6ea43655:python/ray/data/_internal/execution/operators/map_operator.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/train/v2/_internal/callbacks/placement_group_callback.py",
+   "descricao": "outro (nenhuma): [fix/train] v2 PlacementGroupCleaner zombie actor (#61756)",
+   "linha": 40,
+   "origem": "github:ray-project/ray@d136472b10e31d524df9120524b07571579b7ec1:python/ray/train/v2/_internal/callbacks/placement_group_callback.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/data/_internal/execution/operators/task_pool_map_operator.py",
+   "descricao": "outro (nenhuma): [Data] Fix `max_calls` to not be passed into `.options()` (#57265)",
+   "linha": 90,
+   "origem": "github:ray-project/ray@dde59b1f33bf92cda7fc7cde128d8fbe81cc57b7:python/ray/data/_internal/execution/operators/task_pool_map_operator.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/data/_internal/planner/plan_expression/expression_evaluator.py",
+   "descricao": "outro (nenhuma): [Data] Fix filter expr equating negative numbers (#50932)",
+   "linha": 165,
+   "origem": "github:ray-project/ray@e0f7bbcff4027bd321c3b41650f39eddd4fcd4bd:python/ray/data/_internal/planner/plan_expression/expression_evaluator.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/rllib/env/multi_agent_env_runner.py",
+   "descricao": "outro (nenhuma): [RLlib] Fix missing support for `config.count_steps_by = \"agent_steps\"`. (#54885)",
+   "linha": 287,
+   "origem": "github:ray-project/ray@e5ed7bf8ca70542a2e7e40bb47dd8a1a6f0283bd:rllib/env/multi_agent_env_runner.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/dashboard/modules/job/cli.py",
+   "descricao": "outro (nenhuma): [Core][Job] Fix env var expansion in job submit CLI by using shlex.join (#63797)",
+   "linha": 4,
+   "origem": "github:ray-project/ray@f219a40b7259faf9237c2ef1bb0701638c82f6ba:python/ray/dashboard/modules/job/cli.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/data/_internal/datasource/parquet_datasink.py",
+   "descricao": "outro (nenhuma): [data] fix write_parquet to allow row_group_size (#52512)",
+   "linha": 90,
+   "origem": "github:ray-project/ray@f58723e61d4c982883b4b029e0dc7f5269ce3cbf:python/ray/data/_internal/datasource/parquet_datasink.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ray-project__ray/python/ray/serve/_private/grpc_util.py",
+   "descricao": "outro (nenhuma): Fix backpressure gRPC error code (#54537)",
+   "linha": 130,
+   "origem": "github:ray-project/ray@ffc7d7f617fcdd9cce2da6b0f9f6229a46efc5ae:python/ray/serve/_private/grpc_util.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/models/physics/physics.py",
+   "descricao": "outro (nenhuma): Fix PF electrical accounting for Ohmic heating (#4664)",
+   "linha": 1879,
+   "origem": "github:ukaea/PROCESS@1ac8230864182cd353d4279b96b895de1c5cc51b:process/models/physics/physics.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/input.py",
+   "descricao": "outro (nenhuma): Add low aspect ratio demo regression test (#4020)",
+   "linha": 1079,
+   "origem": "github:ukaea/PROCESS@1cea8037993b19068294d549048f316e195b5d4b:process/input.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/core/io/plot/summary.py",
+   "descricao": "outro (nenhuma): :bug:   Add full tf midplane thickness (#4201)",
+   "linha": 10104,
+   "origem": "github:ukaea/PROCESS@244f360943f972d0e3b0f4ced313ab6cb720e1af:process/core/io/plot/summary.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/pulse.py",
+   "descricao": "outro (nenhuma): Fix return statement in calculate_burn_time method to return None when i_pulsed_plant is not equal to 1",
+   "linha": 30,
+   "origem": "github:ukaea/PROCESS@3c09a862cd3b7b76baab55197135f888241a1739:process/pulse.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/pfcoil.py",
+   "descricao": "outro (nenhuma): Review fixes",
+   "linha": 1167,
+   "origem": "github:ukaea/PROCESS@3e6ec1563ae3a1ac4c83130ae470130f12dd4d08:process/pfcoil.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/models/physics/current_drive.py",
+   "descricao": "outro (nenhuma): Fix nbi power: correct shine-through, use plasma-coupled power instead of raw power; corrected wall-plug power conversio",
+   "linha": 583,
+   "origem": "github:ukaea/PROCESS@46318879aceb85df56092812be553fea9bcde77c:process/models/physics/current_drive.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/caller.py",
+   "descricao": "outro (nenhuma): Track the runtime of PROCESS regression tests (#4092)",
+   "linha": 11,
+   "origem": "github:ukaea/PROCESS@49a85989030a84b9dd0cb7a50fafa4277d102191:process/caller.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/power.py",
+   "descricao": "outro (nenhuma): 🐛 fix miss labelled cs coil currents (#3381)",
+   "linha": 133,
+   "origem": "github:ukaea/PROCESS@4fa879785717a25f19775c5d4459cdadf1f26efb:process/power.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/tf_coil.py",
+   "descricao": "outro (nenhuma): :bug: Fixes for regression tests",
+   "linha": 579,
+   "origem": "github:ukaea/PROCESS@b51b3968898bd7cf3ee443023e93ce334182d9f2:process/tf_coil.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/models/cs_fatigue.py",
+   "descricao": "outro (nenhuma): Fix Newman-Raju G22 term in surface crack SIF for a > c (#4531)",
+   "linha": 244,
+   "origem": "github:ukaea/PROCESS@c263b1d2878ca748a5b6d9e05315f35861447d1a:process/models/cs_fatigue.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/documentation/scripts/plotting_scripts/profile_peng_qbar.py",
+   "descricao": "outro (nenhuma): Fix inverted q95 to qbar transform in Peng TART scalings (#4533)",
+   "linha": 9,
+   "origem": "github:ukaea/PROCESS@d3c45e3ece528c0f3f6b27383cf4329204197111:documentation/scripts/plotting_scripts/profile_peng_qbar.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "ukaea__PROCESS/process/io/plot_solutions.py",
+   "descricao": "outro (nenhuma): added 'PD' ruff rule and fixed errors the PD errors (#3480)",
+   "linha": 384,
+   "origem": "github:ukaea/PROCESS@eece5892114f817e66c9507244bed2cc712b479f:process/io/plot_solutions.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/models/step5/nvidia/mtp.py",
+   "descricao": "outro (nenhuma): [Bugfix][Step5][Spec Decode] Skip VllmConfig re-validation for the MTP draft config (#66000)",
+   "linha": 4,
+   "origem": "github:vllm-project/vllm@0e7ce45962af40f96b8e89ab6502d12b1e81b58d:vllm/models/step5/nvidia/mtp.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/transformers_utils/processors/deepseek_ocr.py",
+   "descricao": "outro (nenhuma): [Bugfix] Fix deepseek-ocr multi-image inference and add `merge_by_field_config=True` with tensor schema support (#27361)",
+   "linha": 414,
+   "origem": "github:vllm-project/vllm@2566dca2a9e4e24c941845905e0ebad62441a1fa:vllm/transformers_utils/processors/deepseek_ocr.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a8_fp8.py",
+   "descricao": "outro (nenhuma): [quantization] use channel scales for w4a8 + misc fixes (#23570)",
+   "linha": 82,
+   "origem": "github:vllm-project/vllm@2c2b140ae8c60dc0c38e4d37274fc7106a72c21b:vllm/model_executor/layers/quantization/compressed_tensors/schemes/compressed_tensors_w4a8_fp8.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/model_executor/layers/fused_moe/experts/cutlass_moe.py",
+   "descricao": "outro (nenhuma): [Bugfix] Fix test_cutlass_moe.py (#44380)",
+   "linha": 382,
+   "origem": "github:vllm-project/vllm@439203d32c642db4e7db04847a0e231b728628e0:vllm/model_executor/layers/fused_moe/experts/cutlass_moe.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/scalar_type.py",
+   "descricao": "outro (nenhuma): [Misc] Fix ScalarType float4 naming  (#17690)",
+   "linha": 336,
+   "origem": "github:vllm-project/vllm@6eae34533a893d26b5f6d178c3b5885aa229e520:vllm/scalar_type.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/distributed/kv_events.py",
+   "descricao": "outro (nenhuma): [CI] Fix race condition in test_kv_cache_events test (#18169)",
+   "linha": 133,
+   "origem": "github:vllm-project/vllm@78aa341d124e4e2162defdabde8e8b0a97ffb79d:vllm/distributed/kv_events.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/entrypoints/openai/responses/serving.py",
+   "descricao": "outro (nenhuma): [Bugfix][Frontend] streaming tool-call serializer drops first args chunk when name and args share a DeltaMessage  (#4268",
+   "linha": 88,
+   "origem": "github:vllm-project/vllm@7909f82a450405fe61280ca747d31a8e9978e1fe:vllm/entrypoints/openai/responses/serving.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/examples/offline_inference/audio_language.py",
+   "descricao": "outro (nenhuma): [Bugfix][VLM] Fix failing Phi-4-MM multi-images tests and add vision-speech test (#16424)",
+   "linha": 202,
+   "origem": "github:vllm-project/vllm@93195146eaa48d102c272d24d7c4e0e148759602:examples/offline_inference/audio_language.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/distributed/kv_transfer/kv_connector/v1/offloading/scheduler.py",
+   "descricao": "outro (nenhuma): [Bugfix] Fix Mamba all-mode CPU offload boundary alignment (#51100)",
+   "linha": 149,
+   "origem": "github:vllm-project/vllm@c810e5ee9976ad86b81d1277b53e76d0ee639414:vllm/distributed/kv_transfer/kv_connector/v1/offloading/scheduler.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/renderers/hf.py",
+   "descricao": "outro (nenhuma): [Bugfix] Consume prompt embedding sentinel IDs before model execution (#64367)",
+   "linha": 1482,
+   "origem": "github:vllm-project/vllm@d8e6fbe461f54ec17274fc49000e94d332347e6a:vllm/renderers/hf.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/config/speculative.py",
+   "descricao": "outro (nenhuma): [Bugfix][Spec Decode] Keep nested-config and YaRN drafts within their rotary cache (#63432)",
+   "linha": 154,
+   "origem": "github:vllm-project/vllm@f7adac3220eda62e9191aa951b3c4573f08940f8:vllm/config/speculative.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/tool_parsers/utils.py",
+   "descricao": "outro (nenhuma): [Bugfix][Frontend] Constrain forced named tool choice with empty parameters to a JSON object (#45290)",
+   "linha": 311,
+   "origem": "github:vllm-project/vllm@fcf4750466b07c2ba921a7da3831f585cbc2b8d7:vllm/tool_parsers/utils.py",
+   "palavras_chave": []
+  },
+  {
+   "arquivo": "vllm-project__vllm/vllm/v1/attention/backends/flashinfer.py",
+   "descricao": "outro (nenhuma): [Bugfix] Apply the layer q_scale only to FP8 queries in FlashInfer (#64329)",
+   "linha": 2358,
+   "origem": "github:vllm-project/vllm@fe3ed684ce82ac822127facba4183001ac9516ef:vllm/v1/attention/backends/flashinfer.py",
+   "palavras_chave": []
+  }
+ ],
+ "diff": "pr-eval.diff",
+ "nota": "Bugs reais (gabarito = commit de correção), eventos depois do embargo, split só temporal. Classe `outro` sem palavra-chave: conte o achado pela linha (±tolerância).",
+ "tolerancia_linhas": 2
+}
