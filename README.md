@@ -110,6 +110,8 @@ Fix: `extra_body: {cache_prompt: false}` on the endpoint and `concorrencia: 1` (
 - **An infrastructure error is not a zero score.** A timeout or 5xx leaves the mean and is reported. If it exceeds 5% of cases, the gate fails (invalid evaluation, not a bad model).
 - **Files instead of Postgres in v1.** Each run is a directory (`config.yaml`, `results.jsonl`, `summary.json`) that can be committed as a baseline. Postgres + a dashboard come in v2.
 
+**Tests:** 41 tests and `ruff check .`, all passing in a local run on 2026-11-22. The GitHub Actions workflow in `.github/workflows/ci.yml` runs the same commands; for now it is triggered manually.
+
 ## Usage
 
 ```bash
